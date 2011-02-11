@@ -1,0 +1,1 @@
+// ggSolver -> ggComputeFunc
