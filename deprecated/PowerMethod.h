@@ -28,7 +28,7 @@ public:
 	int nb = 0;
 	Scalar< Atom > lambda = 0;
 	Scalar< Atom > lambda_old = 0;
-	while ( norm(old_lambda - lambda) > epsilon &&
+	while ( abs(old_lambda - lambda) > epsilon &&
 		nb < nbItMax )
 	    {
 		gemv(A,v,w);
