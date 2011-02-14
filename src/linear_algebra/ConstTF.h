@@ -18,14 +18,13 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
     Contact: todos@geneura.ugr.es, http://geneura.ugr.es
-             mak@dhi.dk,
-	     Caner Candan <caner@candan.fr>, http://caner.candan.fr
+             mak@dhi.dk
     CVS Info: $Date: 2004-12-01 09:22:48 $ $Header: /home/nojhan/dev/eodev/eodev_cvs/eo/src/Functor.h,v 1.7 2004-12-01 09:22:48 evomarc Exp $ $Author: evomarc $
  */
 //-----------------------------------------------------------------------------
 
-#ifndef _linear_algebra_ConstUF_h
-#define _linear_algebra_ConstUF_h
+#ifndef _linear_algebra_ConstTF_h
+#define _linear_algebra_ConstTF_h
 
 #include "FunctorBase.h"
 
@@ -33,27 +32,30 @@ namespace linear_algebra
 {
 
     /**
-       Basic Unary Functor. Derive from this class when defining
-       any unary function. First template argument is the first_argument_type,
-       second result_type.
+       Const Basic Tertiary Functor. Derive from this class when defining
+       any tertiary function. First template argument is result_type, second
+       is first_argument_type, third is second_argument_type.
        Argument and result types can be any type including void for
        result_type
     **/
-    template <class A1, class R>
-    class ConstUF : public FunctorBase
+    template <class A1, class A2, class A3, class R>
+    class ConstTF : public FunctorBase
     {
     public :
+        /// virtual dtor here so there is no need to define it in derived classes
+	virtual ~ConstTF() {}
 
-	/// virtual dtor here so there is no need to define it in derived classes
-	virtual ~ConstUF() {}
+	//typedef R result_type;
+	//typedef A1 first_argument_type;
+	//typedef A2 second_argument_type;
 
 	/// The pure virtual function that needs to be implemented by the subclass
-	virtual R operator()(const A1&) const = 0;
+	virtual R operator()(const A1&, const A2&, const A3&) const = 0;
 
 	/// tag to identify a procedure in compile time function selection @see functor_category
-	static FunctorBase::unary_function_tag functor_category()
+	static FunctorBase::tertiary_function_tag functor_category()
 	{
-	    return FunctorBase::unary_function_tag();
+	    return FunctorBase::tertiary_function_tag();
 	}
     };
 
@@ -62,12 +64,12 @@ namespace linear_algebra
        of the type of functor we are dealing with
        @see Counter, make_counter
     */
-    template<class R, class A1>
-    FunctorBase::unary_function_tag functor_category(const ConstUF<A1, R>&)
+    template<class R, class A1, class A2, class A3>
+    FunctorBase::tertiary_function_tag functor_category(const ConstTF<A1, A2, A3, R>&)
     {
-	return FunctorBase::unary_function_tag();
+	return FunctorBase::tertiary_function_tag();
     }
 
 }
 
-#endif // !_linear_algebra_ConstUF_h
+#endif // !_linear_algebra_ConstTF_h

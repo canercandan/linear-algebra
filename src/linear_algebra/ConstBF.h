@@ -40,7 +40,7 @@ namespace linear_algebra
        result_type
     **/
     template <class A1, class A2, class R>
-    class ConstBF : public FunctorBase, public std::binary_function<A1, A2, R>
+    class ConstBF : public FunctorBase
     {
     public :
         /// virtual dtor here so there is no need to define it in derived classes
