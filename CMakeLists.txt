@@ -28,6 +28,8 @@ SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 ### 3) Include header files path
 ######################################################################################
 
+INCLUDE(install.cmake OPTIONAL)
+
 INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   ${CMAKE_CURRENT_SOURCE_DIR}/src/${PROJECT_NAME}
