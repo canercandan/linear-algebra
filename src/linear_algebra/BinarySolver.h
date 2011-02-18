@@ -19,7 +19,9 @@
 #ifndef _linear_algebra_BinarySolver_h
 #define _linear_algebra_BinarySolver_h
 
-#include "ConstBF.h"
+#include "core_library/ConstBF.h"
+
+using namespace core_library;
 
 namespace linear_algebra
 {
