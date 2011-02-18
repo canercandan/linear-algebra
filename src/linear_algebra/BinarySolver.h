@@ -19,16 +19,14 @@
 #ifndef _linear_algebra_BinarySolver_h
 #define _linear_algebra_BinarySolver_h
 
-#include "core_library/ConstBF.h"
-
-using namespace core_library;
+#include "core_library/BO.h"
 
 namespace linear_algebra
 {
 
     /* here's the solver base class */
-    template < A1, A2, R >
-    class BinarySolver : public ConstBF< A1, A2, R > {};
+    template < typename A1, typename A2, typename R >
+    class BinarySolver : public core_library::BO< A1, A2, R > {};
 
 }
 
