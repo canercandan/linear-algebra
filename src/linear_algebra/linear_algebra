@@ -19,6 +19,8 @@
 #ifndef _linear_algebra_
 #define _linear_algebra_
 
+#include <core_library/core_library>
+
 #include "BinarySolver.h"
 
 #endif // !_linear_algebra_
