@@ -1,0 +1,8 @@
+# PROJECT(cusp)
+
+# FILE(GLOB HDRS *.h ${PROJECT_NAME})
+# INSTALL(FILES ${HDRS} DESTINATION include/linear_algebra/detail/${PROJECT_NAME} COMPONENT headers)
+
+# FILE(GLOB SOURCES *.cu *.cpp)
+# ADD_LIBRARY(linear_algebra_${PROJECT_NAME} STATIC ${SOURCES})
+# INSTALL(TARGETS linear_algebra_${PROJECT_NAME} ARCHIVE DESTINATION lib COMPONENT libraries)

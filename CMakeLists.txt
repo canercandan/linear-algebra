@@ -56,8 +56,8 @@ ENDIF()
 ### 5) Prepare some variables for CMAKE usage
 ######################################################################################
 
-SET(SAMPLE_CXX_SRCS)
-SET(SAMPLE_CU_SRCS)
+SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
+LINK_DIRECTORIES(${LIBRARY_OUTPUT_PATH})
 
 ######################################################################################
 
@@ -70,19 +70,5 @@ ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(application)
 ADD_SUBDIRECTORY(test)
 ADD_SUBDIRECTORY(doc)
-
-######################################################################################
-
-
-######################################################################################
-### 7) Create executable, link libraries and prepare target
-######################################################################################
-
-SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
-
-LINK_DIRECTORIES(${LIBRARY_OUTPUT_PATH})
-
-ADD_LIBRARY(${PROJECT_NAME} STATIC ${SAMPLE_CXX_SRCS})
-INSTALL(TARGETS ${PROJECT_NAME} ARCHIVE DESTINATION lib COMPONENT libraries)
 
 ######################################################################################
