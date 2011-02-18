@@ -54,7 +54,8 @@ ENDIF()
 ### 5) Prepare some variables for CMAKE usage
 ######################################################################################
 
-SET(SAMPLE_SRCS)
+SET(SAMPLE_CXX_SRCS)
+SET(SAMPLE_CU_SRCS)
 
 ######################################################################################
 
@@ -79,7 +80,7 @@ SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 
 LINK_DIRECTORIES(${LIBRARY_OUTPUT_PATH})
 
-ADD_LIBRARY(${PROJECT_NAME} STATIC ${SAMPLE_SRCS})
+ADD_LIBRARY(${PROJECT_NAME} STATIC ${SAMPLE_CXX_SRCS})
 INSTALL(TARGETS ${PROJECT_NAME} ARCHIVE DESTINATION lib COMPONENT libraries)
 
 ######################################################################################

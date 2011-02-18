@@ -3,6 +3,8 @@
 ######################################################################################
 
 ADD_SUBDIRECTORY(linear_algebra)
-SET(SAMPLE_SRCS ${SAMPLE_SRCS} PARENT_SCOPE)
+
+SET(SAMPLE_CXX_SRCS ${SAMPLE_CXX_SRCS} PARENT_SCOPE)
+SET(SAMPLE_CU_SRCS ${SAMPLE_CU_SRCS} PARENT_SCOPE)
 
 ######################################################################################
