@@ -1,7 +1,7 @@
 PROJECT(cublas)
 
 FILE(GLOB HDRS *.h ${PROJECT_NAME})
-INSTALL(FILES ${HDRS} DESTINATION include/linear_algebra/detail/${PROJECT_NAME} COMPONENT headers)
+INSTALL(FILES ${HDRS} DESTINATION include/linear_algebra/detail/device/${PROJECT_NAME} COMPONENT headers)
 
 FILE(GLOB SOURCES *.cu *.cpp)
 CUDA_ADD_LIBRARY(linear_algebra_${PROJECT_NAME} STATIC ${SOURCES})

@@ -19,7 +19,7 @@
 
 #include "Matrix.h"
 
-using namespace linear_algebra::cublas;
+using namespace linear_algebra::detail::device::cublas;
 
 template class Matrix< float >;
 template class Matrix< double >;
