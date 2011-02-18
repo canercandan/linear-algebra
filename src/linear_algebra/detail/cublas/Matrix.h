@@ -24,6 +24,8 @@
 
 #include <cublas.h>
 
+#include <stdexcept>
+
 namespace linear_algebra
 {
     namespace cublas
@@ -37,9 +39,7 @@ namespace linear_algebra
 		cublasStatus stat = cublasAlloc(n*m, sizeof(*deviceMatrix), (void**)&deviceMatrix);
 		if ( stat == CUBLAS_STATUS_SUCCESS )
 		    {
-			std::cerr << "data memory allocation failed" << std::endl;
-			// TODO: remplacer par une exception
-			return;
+			throw std::runtime_error("data memory allocation failed");
 		    }
 	    }
 
@@ -54,7 +54,7 @@ namespace linear_algebra
 		hostMatrix = (Atom*)malloc(n*m*sizeof(*hostMatrix));
 		if ( hostMatrix == NULL )
 		    {
-			std::cerr << "out of memory" << std::endl;
+			throw std::runtime_error("out of memory");
 		    }
 	    }
 
@@ -80,9 +80,8 @@ namespace linear_algebra
 		cublasStatus stat = cublasSetMatrix(m, n, sizeof(*hostMatrix), hostMatrix, m, deviceMatrix, m);
 		if ( stat == CUBLAS_STATUS_SUCCESS )
 		    {
-			std::cerr << "data download failed" << std::endl;
 			destroyDeviceMatrix(deviceMatrix);
-			return;
+			throw std::runtime_error("data download failed");
 		    }
 	    }
 
