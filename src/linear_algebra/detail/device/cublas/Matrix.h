@@ -16,8 +16,8 @@
  * Authors: Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#ifndef _linear_algebra_cublas_Matrix_h
-#define _linear_algebra_cublas_Matrix_h
+#ifndef _linear_algebra_detail_device_cublas_Matrix_h
+#define _linear_algebra_detail_device_cublas_Matrix_h
 
 #include "core_library/Object.h"
 #include "core_library/Printable.h"
@@ -122,4 +122,4 @@ namespace linear_algebra
     }
 }
 
-#endif // !_linear_algebra_cublas_Matrix_h
+#endif // !_linear_algebra_detail_device_cublas_Matrix_h

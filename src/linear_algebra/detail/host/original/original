@@ -16,12 +16,12 @@
  * Authors: Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#ifndef _linear_algebra_detail_device_cusparse_
-#define _linear_algebra_detail_device_cusparse_
+#ifndef _linear_algebra_host_original_
+#define _linear_algebra_host_original_
 
 #include <linear_algebra/linear_algebra>
 
-#endif // !_linear_algebra_detail_device_cusparse_
+#endif // !_linear_algebra_host_original_
 
 // Local Variables:
 // mode: C++

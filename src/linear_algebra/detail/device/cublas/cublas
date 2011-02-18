@@ -16,14 +16,14 @@
  * Authors: Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#ifndef _cublas_
-#define _cublas_
+#ifndef _linear_algebra_detail_device_cublas_
+#define _linear_algebra_detail_device_cublas_
 
 #include <linear_algebra/linear_algebra>
 
 #include "Matrix.h"
 
-#endif // !_cublas_
+#endif // !_linear_algebra_detail_device_cublas_
 
 // Local Variables:
 // mode: C++
