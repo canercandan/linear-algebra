@@ -2,7 +2,7 @@
 ### 1) Where do we go now ?!?
 ######################################################################################
 
-ADD_SUBDIRECTORY(linear_algebra)
+ADD_SUBDIRECTORY(${PROJECT_NAME})
 
 SET(SAMPLE_CXX_SRCS ${SAMPLE_CXX_SRCS} PARENT_SCOPE)
 SET(SAMPLE_CU_SRCS ${SAMPLE_CU_SRCS} PARENT_SCOPE)
