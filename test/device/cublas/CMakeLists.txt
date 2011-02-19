@@ -1,5 +1,5 @@
 SET(SOURCES
-  t-create-matrix
+  t-matvec
   t-docexample
   t-gemv
   )
