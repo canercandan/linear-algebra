@@ -39,6 +39,9 @@ namespace linear_algebra
 		class Vector : public linear_algebra::Vector< Atom >
 		{
 		public:
+		    Vector() : _deviceVector(NULL), _n(0)
+		    {}
+
 		    Vector(int n) : _deviceVector(NULL), _n(n)
 		    {
 			createDeviceVector(_deviceVector, _n);
@@ -48,7 +51,7 @@ namespace linear_algebra
 		    {
 			Atom* hostVector;
 			createHostVector(hostVector, _n);
-			fillHostVector(hostVector, value, _n);
+			fillHostVector(hostVector, _n, value);
 			createDeviceVector(_deviceVector, _n);
 			memcpyHostToDevice(hostVector, _deviceVector, _n);
 			destroyHostVector(hostVector);
@@ -56,11 +59,13 @@ namespace linear_algebra
 
 		    ~Vector()
 		    {
+			if ( !_deviceVector ) { return; }
 			destroyDeviceVector(_deviceVector);
 		    }
 
 		    Vector& operator=( Atom*& v )
 		    {
+			if ( !_deviceVector ) { return *this; }
 			memcpyHostToDevice(v, _deviceVector, _n);
 			return *this;
 		    }
@@ -69,6 +74,7 @@ namespace linear_algebra
 
 		    virtual void printOn(std::ostream& _os) const
 		    {
+			if ( !_deviceVector ) { return; }
 			if ( _n <= 0 ) { return; }
 
 			Atom* hostVector;
@@ -92,10 +98,27 @@ namespace linear_algebra
 			destroyHostVector(hostVector);
 		    }
 
-		    operator Atom*() const { return _deviceVector; }
-		    operator Atom*() { return _deviceVector; }
+		    operator Atom*() const
+		    {
+			if ( !_deviceVector )
+			    {
+				throw std::runtime_error("deviceVector is not allocated on GPU memory");
+			    }
+			return _deviceVector;
+		    }
 
 		    inline int size() const { return _n; }
+
+		    void resize(int n)
+		    {
+			if ( _deviceVector )
+			    {
+				destroyDeviceVector( _deviceVector );
+			    }
+
+			_n = n;
+			createDeviceVector(_deviceVector, _n);
+		    }
 
 		private:
 		    Atom* _deviceVector;

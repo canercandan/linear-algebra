@@ -38,30 +38,31 @@ namespace linear_algebra
 		class Matrix : public linear_algebra::Matrix< Atom >
 		{
 		public:
-		    Matrix(int n) : _deviceMatrix(NULL), _hostMatrix(NULL), _n(n), _m(n)
+		    Matrix() : _deviceMatrix(NULL), _n(0), _m(0) {}
+
+		    Matrix(int n) : _deviceMatrix(NULL), _n(n), _m(n)
 		    {
 			createDeviceMatrix(_deviceMatrix, _n, _m);
-			createHostMatrix(_hostMatrix, _n, _m);
 		    }
 
-		    Matrix(int n, int m) : _deviceMatrix(NULL), _hostMatrix(NULL), _n(n), _m(m)
+		    Matrix(int n, int m) : _deviceMatrix(NULL), _n(n), _m(m)
 		    {
 			createDeviceMatrix(_deviceMatrix, _n, _m);
-			createHostMatrix(_hostMatrix, _n, _m);
 		    }
 
-		    Matrix(int n, int m, Atom value) : _deviceMatrix(NULL), _hostMatrix(NULL), _n(n), _m(m)
+		    Matrix(int n, int m, Atom value) : _deviceMatrix(NULL), _n(n), _m(m)
 		    {
-			createHostMatrix(_hostMatrix, _n, _m);
-			fillHostMatrix(_hostMatrix, value, _n, _m);
+			Atom* hostMatrix;
+			createHostMatrix(hostMatrix, _n, _m);
+			fillHostMatrix(hostMatrix, _n, _m, value);
 			createDeviceMatrix(_deviceMatrix, _n, _m);
-			memcpyHostToDevice(_hostMatrix, _deviceMatrix, _n, _m);
+			memcpyHostToDevice(hostMatrix, _deviceMatrix, _n, _m);
+			destroyHostMatrix(hostMatrix);
 		    }
 
 		    ~Matrix()
 		    {
 			destroyDeviceMatrix(_deviceMatrix);
-			destroyHostMatrix(_hostMatrix);
 		    }
 
 		    Matrix& operator=( Atom*& m )
@@ -74,18 +75,58 @@ namespace linear_algebra
 
 		    virtual void printOn(std::ostream& _os) const
 		    {
-			// TODO
+			if ( !_deviceMatrix ) { return; }
+			if ( _n <= 0 ) { return; }
+			if ( _m <= 0 ) { return; }
+
+			Atom* hostMatrix;
+			createHostMatrix( hostMatrix, _n, _m );
+
+			cublasStatus stat = cublasGetVector(_n*_m, sizeof(*_deviceMatrix), _deviceMatrix, 1, hostMatrix, 1);
+			if ( stat != CUBLAS_STATUS_SUCCESS )
+			    {
+				throw std::runtime_error("data download failed");
+			    }
+
+			for ( int i = 0; i < _n; ++i )
+			    {
+				_os << "[" << *(hostMatrix + i*_n);
+				for ( int j = 0; j < _m; ++j )
+				    {
+					_os << ", " << *(hostMatrix + i*_n + j);
+				    }
+				_os << "]" << std::endl;;
+			    }
+
+			destroyHostMatrix(hostMatrix);
 		    }
 
-		    operator Atom*() const { return _deviceMatrix; }
-		    operator Atom*() { return _deviceMatrix; }
+		    operator Atom*() const
+		    {
+			if ( !_deviceMatrix )
+			    {
+				throw std::runtime_error("deviceMatrix is not allocated on GPU memory");
+			    }
+			return _deviceMatrix;
+		    }
 
 		    inline int rows() const { return _n; }
 		    inline int cols() const { return _m; }
 
+		    void resize(int n, int m)
+		    {
+			if ( _deviceMatrix )
+			    {
+				destroyDeviceMatrix( _deviceMatrix );
+			    }
+
+			_n = n;
+			_m = m;
+			createDeviceMatrix(_deviceMatrix, _n, _m);
+		    }
+
 		private:
 		    Atom* _deviceMatrix;
-		    Atom* _hostMatrix;
 		    int _n;
 		    int _m;
 

@@ -46,13 +46,16 @@ namespace linear_algebra
 		public:
 		    Gemv() {}
 
-		    void operator()( const Matrix< Atom >&, const Vector< Atom >&, Vector< Atom >& ) {}
+		    void operator()( const Matrix< Atom >&, const Vector< Atom >&, Vector< Atom >& );
 		};
 
 		template <>
 		void Gemv< float >::operator()( const Matrix< float >& A, const Vector< float >& x, Vector< float >& y )
 		{
-		    cublasSgemv('n', A.cols(), A.rows(), 1, A, A.cols(), x, 1, 0, y, 1);
+		    int n = A.rows();
+		    int m = A.cols();
+		    if ( y.size() < n ) { y.resize( n ); }
+		    cublasSgemv('n', m, n, 1, A, m, x, 1, 0, y, 1);
 		    cublasStatus stat = cublasGetError();
 		    if ( stat != CUBLAS_STATUS_SUCCESS )
 			{
@@ -63,7 +66,10 @@ namespace linear_algebra
 		template <>
 		void Gemv< double >::operator()( const Matrix< double >& A, const Vector< double >& x, Vector< double >& y )
 		{
-		    cublasDgemv('n', A.cols(), A.rows(), 1, A, A.cols(), x, 1, 0, y, 1);
+		    int n = A.rows();
+		    int m = A.cols();
+		    if ( y.size() < n ) { y.resize( n ); }
+		    cublasDgemv('n', m, n, 1, A, m, x, 1, 0, y, 1);
 		    cublasStatus stat = cublasGetError();
 		    if ( stat != CUBLAS_STATUS_SUCCESS )
 			{

@@ -22,8 +22,8 @@
 
 using namespace linear_algebra::detail::device::cublas;
 
-//typedef float T;
-typedef double T;
+typedef float T;
+//typedef double T;
 
 int main(void)
 {
@@ -34,7 +34,7 @@ int main(void)
 
     Matrix<T> A(M, N, 1);
     Vector<T> x(N, 1);
-    Vector<T> y(M);
+    Vector<T> y(100, 42);
 
     Gemv<T> gemv;
     gemv( A, x, y );
