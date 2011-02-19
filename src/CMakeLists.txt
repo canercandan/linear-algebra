@@ -4,7 +4,4 @@
 
 ADD_SUBDIRECTORY(${PROJECT_NAME})
 
-SET(SAMPLE_CXX_SRCS ${SAMPLE_CXX_SRCS} PARENT_SCOPE)
-SET(SAMPLE_CU_SRCS ${SAMPLE_CU_SRCS} PARENT_SCOPE)
-
 ######################################################################################
