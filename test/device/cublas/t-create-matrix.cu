@@ -22,7 +22,26 @@
 
 using namespace linear_algebra::detail::device::cublas;
 
+//typedef float T;
+typedef double T;
+
 int main(void)
 {
+    // cublasInit();
+
+    const int N = 10;
+    const int M = 10;
+
+    Matrix<T> A(M, N, 1);
+    Vector<T> x(N, 1);
+    Vector<T> y(M);
+
+    Gemv<T> gemv;
+    gemv( A, x, y );
+
+    core_library::logger << y << std::endl;
+
+    // cublasShutdown();
+
     return 0;
 }

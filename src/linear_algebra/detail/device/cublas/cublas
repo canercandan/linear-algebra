@@ -21,7 +21,10 @@
 
 #include <linear_algebra/linear_algebra>
 
+#include "Vector.h"
 #include "Matrix.h"
+
+#include "Gemv.h"
 
 #endif // !_linear_algebra_detail_device_cublas_
 

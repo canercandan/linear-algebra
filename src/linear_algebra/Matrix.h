@@ -30,7 +30,10 @@ namespace linear_algebra
     class Matrix : public Object, public Printable
     {
     public:
-	virtual Matrix& operator=( const Matrix< Atom >& v ) = 0;
+	//virtual Matrix& operator=( const Matrix< Atom >& v ) = 0;
+
+	virtual int rows() const = 0;
+	virtual int cols() const = 0;
     };
 }
 

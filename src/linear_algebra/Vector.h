@@ -30,7 +30,9 @@ namespace linear_algebra
     class Vector : public Object, public Printable
     {
     public:
-	virtual Vector& operator=( const Vector< Atom >& v ) = 0;
+	//virtual Vector& operator=( const Vector< Atom >& v ) = 0;
+
+	virtual int size() const = 0;
     };
 }
 

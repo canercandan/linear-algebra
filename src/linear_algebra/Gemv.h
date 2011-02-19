@@ -22,9 +22,10 @@
 
 #include "core_library/BO.h"
 
-using namespace core_library;
-
-template < typename Atom >
-class Gemv : public BO< Matrix< Atom >, Vector< Atom >, Vector< Atom > {};
+namespace linear_algebra
+{
+    template < typename MatrixT, typename VectorT >
+    class Gemv : public core_library::BO< MatrixT, VectorT, VectorT > {};
+}
 
 #endif // !_linear_algebra_Gemv_h

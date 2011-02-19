@@ -1,5 +1,7 @@
 SET(SOURCES
   t-create-matrix
+  t-docexample
+  t-gemv
   )
 
 FOREACH(current ${SOURCES})

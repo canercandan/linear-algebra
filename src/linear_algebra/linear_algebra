@@ -23,6 +23,8 @@
 
 #include "BinarySolver.h"
 
+#include "Gemv.h"
+
 #endif // !_linear_algebra_
 
 // Local Variables:

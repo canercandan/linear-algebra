@@ -24,7 +24,7 @@ template < typename Atom >
 class GemvCublas : public Gemv< Atom >
 {
 public:
-    void operator( const MatrixCublas< Atom >&, const VectorCublas< Atom >&, VectorCublas< Atom >& )
+    void operator()( const MatrixCublas< Atom >&, const VectorCublas< Atom >&, VectorCublas< Atom >& )
     {
     }
 };
