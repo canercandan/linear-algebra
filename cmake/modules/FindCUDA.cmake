@@ -104,6 +104,10 @@
 #  -- Adds the cusparse library to the target (can be any target).  Handles
 #     whether you are in emulation mode or not.
 #
+#  CUDA_ADD_CURAND_TO_TARGET( cuda_target )
+#  -- Adds the curand library to the target (can be any target).  Handles
+#     whether you are in emulation mode or not.
+#
 #  CUDA_ADD_EXECUTABLE( cuda_target file0 file1 ...
 #                       [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL] [OPTIONS ...] )
 #  -- Creates an executable "cuda_target" which is made up of the files
@@ -224,6 +228,11 @@
 #  CUDA_CUSPARSE_LIBRARIES -- Device or emulation library for the Cuda SPARSE
 #                             implementation (alterative to:
 #                             CUDA_ADD_CUSPARSE_TO_TARGET macro).
+#
+#
+#  CUDA_CURAND_LIBRARIES -- Device or emulation library for the Cuda RAND
+#                             implementation (alterative to:
+#                             CUDA_ADD_CURAND_TO_TARGET macro).
 #
 #
 #  James Bigler, NVIDIA Corp (nvidia.com - jbigler)
@@ -435,6 +444,8 @@ if(NOT "${CUDA_TOOLKIT_ROOT_DIR}" STREQUAL "${CUDA_TOOLKIT_ROOT_DIR_INTERNAL}")
   unset(CUDA_cublasemu_LIBRARY CACHE)
   unset(CUDA_cusparse_LIBRARY CACHE)
   unset(CUDA_cusparseemu_LIBRARY CACHE)
+  unset(CUDA_curand_LIBRARY CACHE)
+  unset(CUDA_curandemu_LIBRARY CACHE)
   unset(CUDA_cufft_LIBRARY CACHE)
   unset(CUDA_cufftemu_LIBRARY CACHE)
 endif()
@@ -604,25 +615,29 @@ if(CUDA_VERSION VERSION_GREATER "3.0")
   endif()
 endif()
 
-# Search for cufft and cublas and cusparse libraries.
+# Search for cufft and cublas and cusparse and curand libraries.
 if(CUDA_VERSION VERSION_LESS "3.1")
   # Emulation libraries aren't available in version 3.1 onward.
   find_cuda_helper_libs(cufftemu)
   find_cuda_helper_libs(cublasemu)
   find_cuda_helper_libs(cusparseemu)
+  find_cuda_helper_libs(curandemu)
 endif()
 find_cuda_helper_libs(cufft)
 find_cuda_helper_libs(cublas)
 find_cuda_helper_libs(cusparse)
+find_cuda_helper_libs(curand)
 
 if (CUDA_BUILD_EMULATION)
   set(CUDA_CUFFT_LIBRARIES ${CUDA_cufftemu_LIBRARY})
   set(CUDA_CUBLAS_LIBRARIES ${CUDA_cublasemu_LIBRARY})
   set(CUDA_CUSPARSE_LIBRARIES ${CUDA_cusparseemu_LIBRARY})
+  set(CUDA_CURAND_LIBRARIES ${CUDA_curandemu_LIBRARY})
 else()
   set(CUDA_CUFFT_LIBRARIES ${CUDA_cufft_LIBRARY})
   set(CUDA_CUBLAS_LIBRARIES ${CUDA_cublas_LIBRARY})
   set(CUDA_CUSPARSE_LIBRARIES ${CUDA_cusparse_LIBRARY})
+  set(CUDA_CURAND_LIBRARIES ${CUDA_curand_LIBRARY})
 endif()
 
 ########################
@@ -1288,6 +1303,19 @@ macro(CUDA_ADD_CUSPARSE_TO_TARGET target)
     target_link_libraries(${target} ${CUDA_cusparseemu_LIBRARY})
   else()
     target_link_libraries(${target} ${CUDA_cusparse_LIBRARY})
+  endif()
+endmacro()
+
+###############################################################################
+###############################################################################
+# CUDA ADD CURAND TO TARGET
+###############################################################################
+###############################################################################
+macro(CUDA_ADD_CURAND_TO_TARGET target)
+  if (CUDA_BUILD_EMULATION)
+    target_link_libraries(${target} ${CUDA_curandemu_LIBRARY})
+  else()
+    target_link_libraries(${target} ${CUDA_curand_LIBRARY})
   endif()
 endmacro()
 
