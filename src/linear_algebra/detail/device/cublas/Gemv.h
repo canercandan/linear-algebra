@@ -39,7 +39,6 @@ namespace linear_algebra
 	{
 	    namespace cublas
 	    {
-
 		template < typename Atom >
 		class Gemv : public linear_algebra::Gemv< Matrix< Atom >, Vector< Atom > >
 		{
@@ -76,7 +75,6 @@ namespace linear_algebra
 			    throw std::runtime_error("gemv failed");
 			}
 		}
-
 	    }
 	}
     }

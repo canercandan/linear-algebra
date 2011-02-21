@@ -21,7 +21,9 @@
 
 #include <core_library/core_library>
 
-#include "BinarySolver.h"
+#include "Array.h"
+#include "Vector.h"
+#include "Matrix.h"
 
 #include "Gemv.h"
 

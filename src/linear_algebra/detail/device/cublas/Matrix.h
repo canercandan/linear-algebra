@@ -19,11 +19,9 @@
 #ifndef _linear_algebra_detail_device_cublas_Matrix_h
 #define _linear_algebra_detail_device_cublas_Matrix_h
 
-#include <cublas.h>
-
-#include <stdexcept>
-
 #include <linear_algebra/Matrix.h>
+
+#include "Array.h"
 
 namespace linear_algebra
 {
@@ -33,165 +31,51 @@ namespace linear_algebra
 	{
 	    namespace cublas
 	    {
-
 		template < typename Atom >
-		class Matrix : public linear_algebra::Matrix< Atom >
+		class Matrix : virtual public Array< Atom >, virtual public linear_algebra::Matrix< Atom >
 		{
+		    using Array< Atom >::_deviceArray;
+		    using Array< Atom >::_size;
+
 		public:
-		    Matrix() : _deviceMatrix(NULL), _n(0), _m(0) {}
-
-		    Matrix(int n) : _deviceMatrix(NULL), _n(n), _m(n)
-		    {
-			createDeviceMatrix(_deviceMatrix, _n, _m);
-		    }
-
-		    Matrix(int n, int m) : _deviceMatrix(NULL), _n(n), _m(m)
-		    {
-			createDeviceMatrix(_deviceMatrix, _n, _m);
-		    }
-
-		    Matrix(int n, int m, Atom value) : _deviceMatrix(NULL), _n(n), _m(m)
-		    {
-			Atom* hostMatrix;
-			createHostMatrix(hostMatrix, _n, _m);
-			fillHostMatrix(hostMatrix, _n, _m, value);
-			createDeviceMatrix(_deviceMatrix, _n, _m);
-			memcpyHostToDevice(hostMatrix, _deviceMatrix, _n, _m);
-			destroyHostMatrix(hostMatrix);
-		    }
-
-		    ~Matrix()
-		    {
-			destroyDeviceMatrix(_deviceMatrix);
-		    }
-
-		    Matrix& operator=( Atom*& m )
-		    {
-			memcpyHostToDevice(m, _deviceMatrix, _n, _m);
-			return *this;
-		    }
+		    Matrix() {}
+		    Matrix(int n) : Array< Atom >(n*n), _n(n), _m(n) {}
+		    Matrix(int n, Atom value) : Array< Atom >(n*n, value), _n(n), _m(n) {}
+		    Matrix(int n, int m, Atom value) : Array< Atom >(n*m, value), _n(n), _m(m) {}
 
 		    std::string className() const { return "Matrix"; }
 
 		    virtual void printOn(std::ostream& _os) const
 		    {
-			if ( !_deviceMatrix ) { return; }
-			if ( _n <= 0 ) { return; }
-			if ( _m <= 0 ) { return; }
+			if ( !_deviceArray ) { return; }
+			if ( _size <= 0 ) { return; }
 
-			Atom* hostMatrix;
-			createHostMatrix( hostMatrix, _n, _m );
+			Atom* hostArray;
+			createHostArray( hostArray, _size );
 
-			cublasStatus stat = cublasGetVector(_n*_m, sizeof(*_deviceMatrix), _deviceMatrix, 1, hostMatrix, 1);
-			if ( stat != CUBLAS_STATUS_SUCCESS )
-			    {
-				throw std::runtime_error("data download failed");
-			    }
+			CUBLAS_CALL( cublasGetVector(_size, sizeof(*_deviceArray), _deviceArray, 1, hostArray, 1) );
 
 			for ( int i = 0; i < _n; ++i )
 			    {
-				_os << "[" << *(hostMatrix + i*_n);
+				_os << "[" << *(hostArray + i*_n);
 				for ( int j = 0; j < _m; ++j )
 				    {
-					_os << ", " << *(hostMatrix + i*_n + j);
+					_os << ", " << *(hostArray + i*_n + j);
 				    }
-				_os << "]" << std::endl;;
+				_os << "]" << std::endl;
 			    }
 
-			destroyHostMatrix(hostMatrix);
-		    }
-
-		    operator Atom*() const
-		    {
-			if ( !_deviceMatrix )
-			    {
-				throw std::runtime_error("deviceMatrix is not allocated on GPU memory");
-			    }
-			return _deviceMatrix;
+			destroyHostArray(hostArray);
 		    }
 
 		    inline int rows() const { return _n; }
 		    inline int cols() const { return _m; }
 
-		    void resize(int n, int m)
-		    {
-			if ( _deviceMatrix )
-			    {
-				destroyDeviceMatrix( _deviceMatrix );
-			    }
-
-			_n = n;
-			_m = m;
-			createDeviceMatrix(_deviceMatrix, _n, _m);
-		    }
+		    void resize(int n, int m) { Array< Atom >::resize(n*m); }
 
 		private:
-		    Atom* _deviceMatrix;
 		    int _n;
 		    int _m;
-
-		public:
-		    /// Here's some high level cublas routines in static
-
-		    static void createDeviceMatrix(Atom*& deviceMatrix, int n, int m)
-		    {
-			cublasStatus stat = cublasAlloc(n*m, sizeof(*deviceMatrix), (void**)&deviceMatrix);
-			if ( stat != CUBLAS_STATUS_SUCCESS )
-			    {
-				throw std::runtime_error("data memory allocation failed");
-			    }
-		    }
-
-		    static void destroyDeviceMatrix(Atom*& deviceMatrix)
-		    {
-			cublasFree(deviceMatrix);
-			deviceMatrix = NULL;
-		    }
-
-		    static void createHostMatrix(Atom*& hostMatrix, int n, int m)
-		    {
-			hostMatrix = (Atom*)malloc(n*m*sizeof(*hostMatrix));
-			if ( hostMatrix == NULL )
-			    {
-				throw std::runtime_error("out of memory");
-			    }
-		    }
-
-		    static void destroyHostMatrix(Atom*& hostMatrix)
-		    {
-			free(hostMatrix);
-			hostMatrix = NULL;
-		    }
-
-		    static void fillHostMatrix(Atom*& hostMatrix, int n, int m, Atom value)
-		    {
-			for (int j = 0; j < n; ++j)
-			    {
-				for (int i = 0; i < m; ++i)
-				    {
-					*(hostMatrix + i + j) = value;
-				    }
-			    }
-		    }
-
-		    static void memcpyHostToDevice(Atom*& hostMatrix, Atom*& deviceMatrix, int n, int m)
-		    {
-			cublasStatus stat = cublasSetVector(m*n, sizeof(*hostMatrix), hostMatrix, 1, deviceMatrix, 1);
-			if ( stat != CUBLAS_STATUS_SUCCESS )
-			    {
-				throw std::runtime_error("data download failed");
-			    }
-		    }
-
-		    static void memcpyDeviceToHost(Atom*& deviceMatrix, Atom*& hostMatrix, int n, int m)
-		    {
-			cublasStatus stat = cublasGetVector(m*n, sizeof(*deviceMatrix), deviceMatrix, 1, hostMatrix, 1);
-			if ( stat != CUBLAS_STATUS_SUCCESS )
-			    {
-				throw std::runtime_error("data download failed");
-			    }
-		    }
-
 		};
 	    }
 	}

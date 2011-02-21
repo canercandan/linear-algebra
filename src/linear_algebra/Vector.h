@@ -22,17 +22,17 @@
 #include "core_library/Object.h"
 #include "core_library/Printable.h"
 
+#include "Array.h"
+
 using namespace core_library;
 
 namespace linear_algebra
 {
     template < typename Atom >
-    class Vector : public Object, public Printable
+    class Vector : virtual public Array< Atom >
     {
     public:
 	//virtual Vector& operator=( const Vector< Atom >& v ) = 0;
-
-	virtual int size() const = 0;
     };
 }
 

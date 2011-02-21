@@ -16,27 +16,15 @@
  * Authors: Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#ifndef _linear_algebra_Matrix_h
-#define _linear_algebra_Matrix_h
+#ifndef _linear_algebra_detail_device_cuda_
+#define _linear_algebra_detail_device_cuda_
 
-#include "core_library/Object.h"
-#include "core_library/Printable.h"
+#include <linear_algebra/linear_algebra>
 
-#include "Array.h"
+#include "common.h"
 
-using namespace core_library;
+#endif // !_linear_algebra_detail_device_cuda_
 
-namespace linear_algebra
-{
-    template < typename Atom >
-    class Matrix : virtual public Array< Atom >
-    {
-    public:
-	//virtual Matrix& operator=( const Matrix< Atom >& v ) = 0;
-
-	virtual int rows() const = 0;
-	virtual int cols() const = 0;
-    };
-}
-
-#endif // !_linear_algebra_Matrix_h
+// Local Variables:
+// mode: C++
+// End:

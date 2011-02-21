@@ -17,28 +17,15 @@
  * Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#include <linear_algebra/linear_algebra>
-#include <linear_algebra/detail/device/cublas/cublas>
+#ifndef _linear_algebra_detail_device_cublas_common_h
+#define _linear_algebra_detail_device_cublas_common_h
 
-using namespace linear_algebra::detail::device::cublas;
+#include <sstream>
 
-typedef float T;
-//typedef double T;
+#include <cublas.h>
 
-int main(void)
-{
-    const int N = 10;
-    const int M = 10;
+#include "../common.h"
 
-    Matrix<T> A(M, N, 1);
-    Vector<T> x(N, 1);
-    Vector<T> y;
+#define CUBLAS_CALL(x) TEST_CALL( (x), CUBLAS_STATUS_SUCCESS )
 
-    Gemv<T> gemv;
-    gemv( A, x, y );
-
-    core_library::logger << "size: " << y.size() << std::endl;
-    core_library::logger << y << std::endl;
-
-    return 0;
-}
+#endif // !_linear_algebra_detail_device_cublas_common_h

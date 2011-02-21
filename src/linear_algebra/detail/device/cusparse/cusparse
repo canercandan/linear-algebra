@@ -21,6 +21,8 @@
 
 #include <linear_algebra/linear_algebra>
 
+#include "common.h"
+
 #endif // !_linear_algebra_detail_device_cusparse_
 
 // Local Variables:

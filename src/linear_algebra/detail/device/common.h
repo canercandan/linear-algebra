@@ -17,28 +17,27 @@
  * Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#include <linear_algebra/linear_algebra>
-#include <linear_algebra/detail/device/cublas/cublas>
+#ifndef _linear_algebra_detail_device_common_h
+#define _linear_algebra_detail_device_common_h
 
-using namespace linear_algebra::detail::device::cublas;
+#include <sstream>
 
-typedef float T;
-//typedef double T;
+#include <cuda.h>
 
-int main(void)
-{
-    const int N = 10;
-    const int M = 10;
+#define TEST_CALL(x, status)				\
+    do							\
+	{						\
+	    if ( (x) != status )			\
+		{					\
+		    std::ostringstream ss;		\
+		    ss << "Error at " << __FILE__	\
+		       << ":" << __LINE__;		\
+		    throw std::runtime_error(ss.str());	\
+		}					\
+	}						\
+    while(0)
 
-    Matrix<T> A(M, N, 1);
-    Vector<T> x(N, 1);
-    Vector<T> y;
+#define CUDA_CALL(x) TEST_CALL( (x), cudaSuccess )
+#define CUBLAS_CALL(x) TEST_CALL( (x), CUBLAS_STATUS_SUCCESS )
 
-    Gemv<T> gemv;
-    gemv( A, x, y );
-
-    core_library::logger << "size: " << y.size() << std::endl;
-    core_library::logger << y << std::endl;
-
-    return 0;
-}
+#endif // !_linear_algebra_detail_device_common_h
