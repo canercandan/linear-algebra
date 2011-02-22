@@ -37,7 +37,4 @@
 	}						\
     while(0)
 
-#define CUDA_CALL(x) TEST_CALL( (x), cudaSuccess )
-#define CUBLAS_CALL(x) TEST_CALL( (x), CUBLAS_STATUS_SUCCESS )
-
 #endif // !_linear_algebra_detail_device_common_h
