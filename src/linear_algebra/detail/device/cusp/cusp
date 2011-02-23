@@ -21,6 +21,14 @@
 
 #include <linear_algebra/linear_algebra>
 
+#include "Matrix.h"
+
+#include "MatrixCSR.h"
+#include "MatrixCOO.h"
+#include "MatrixELL.h"
+#include "MatrixHYB.h"
+#include "MatrixDIA.h"
+
 #endif // !_linear_algebra_detail_device_cusp_
 
 // Local Variables:

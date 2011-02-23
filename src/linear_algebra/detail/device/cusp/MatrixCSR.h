@@ -16,27 +16,35 @@
  * Authors: Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#ifndef _linear_algebra_Matrix_h
-#define _linear_algebra_Matrix_h
+#ifndef _linear_algebra_detail_device_cublas_MatrixCSR_h
+#define _linear_algebra_detail_device_cublas_MatrixCSR_h
 
-#include "core_library/Object.h"
-#include "core_library/Printable.h"
+#include <cusp/csr_matrix.h>
 
-#include "Array.h"
+#include <linear_algebra/Matrix.h>
 
-using namespace core_library;
+#include "Matrix.h"
 
 namespace linear_algebra
 {
-    template < typename Atom >
-    class Matrix : virtual public Array< Atom >
+    namespace detail
     {
-    public:
-	//virtual Matrix& operator=( const Matrix< Atom >& v ) = 0;
+	namespace device
+	{
+	    namespace cusp
+	    {
+		template < typename Atom >
+		class MatrixCSR : public Matrix< Atom, ::cusp::csr_matrix >
+		{
+		public:
+		    MatrixCSR() {}
+		    MatrixCSR(size_t n, size_t m, size_t nnz) { this->resize(n, m, nnz); }
 
-	// virtual int rows() const = 0;
-	// virtual int cols() const = 0;
-    };
+		    std::string className() const { return "MatrixCSR"; }
+		};
+	    }
+	}
+    }
 }
 
-#endif // !_linear_algebra_Matrix_h
+#endif // !_linear_algebra_detail_device_cublas_MatrixCSR_h

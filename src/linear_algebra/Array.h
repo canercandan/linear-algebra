@@ -34,7 +34,7 @@ namespace linear_algebra
 
 	//virtual operator Atom*() const = 0;
 
-	virtual int size() const = 0;
+	// virtual int size() const = 0;
 	//virtual void resize(int size) = 0;
     };
 }
