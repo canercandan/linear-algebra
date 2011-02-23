@@ -25,7 +25,8 @@
 #include "Vector.h"
 #include "Matrix.h"
 
-#include "Gemv.h"
+#include "MultiplyMatVec.h"
+#include "MultiplyMatVecOp.h"
 
 #endif // !_linear_algebra_
 
