@@ -17,15 +17,15 @@
  * Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#ifndef _linear_algebra_Multiply_h
-#define _linear_algebra_Multiply_h
+#ifndef _linear_algebra_MultiplyMatVec_h
+#define _linear_algebra_MultiplyMatVec_h
 
 #include "core_library/BO.h"
 
 namespace linear_algebra
 {
     template < typename MatrixT, typename VectorT >
-    class Multiply : public core_library::BO< MatrixT, VectorT, VectorT > {};
+    class MultiplyMatVec : public core_library::BO< MatrixT, VectorT, VectorT > {};
 }
 
-#endif // !_linear_algebra_Multiply_h
+#endif // !_linear_algebra_MultiplyMatVec_h
