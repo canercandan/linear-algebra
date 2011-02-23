@@ -34,8 +34,9 @@ int main(void)
     Vector<T> x(N, 1);
     Vector<T> y;
 
-    Gemv<T> gemv;
-    gemv( A, x, y );
+    MultiplyMatVec<T> multiply;
+
+    multiply( A, x, y );
 
     core_library::logger << "size: " << y.size() << std::endl;
     core_library::logger << y << std::endl;

@@ -43,8 +43,8 @@ namespace linear_algebra
 		class MultiplyMatVec : public linear_algebra::MultiplyMatVec< Matrix< Atom >, Vector< Atom > >
 		{
 		public:
-		    MultiplyMatVec() : _operation( Gemv< Atom >() ) {}
-		    MultiplyMatVec( MultiplyMatVecOperation& operation ) : _operation( operation ) {}
+		    MultiplyMatVec() : _operation( _default_operation ) {}
+		    MultiplyMatVec( MultiplyMatVecOp< Atom >& operation ) : _operation( operation ) {}
 
 		    void operator()( const Matrix< Atom >& A, const Vector< Atom >& x, Vector< Atom >& y )
 		    {
@@ -61,6 +61,7 @@ namespace linear_algebra
 		    }
 
 		private:
+		    Gemv< Atom > _default_operation;
 		    MultiplyMatVecOp< Atom >& _operation;
 		};
 	    }

@@ -26,6 +26,9 @@
 #include "Vector.h"
 #include "Matrix.h"
 
+#include "MultiplyMatVec.h"
+#include "MultiplyMatVecOp.h"
+
 #include "Gemv.h"
 
 #endif // !_linear_algebra_detail_device_cublas_
