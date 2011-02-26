@@ -21,13 +21,28 @@
 
 #include <linear_algebra/linear_algebra>
 
+#include "MatrixBase.h"
+#include "VectorBase.h"
+
 #include "Matrix.h"
+#include "Vector.h"
 
 #include "MatrixCSR.h"
 #include "MatrixCOO.h"
 #include "MatrixELL.h"
 #include "MatrixHYB.h"
 #include "MatrixDIA.h"
+
+#include "MultiplyMatVec.h"
+#include "MultiplyMatVecOp.h"
+#include "MultiplyMatVecDefaultOp.h"
+
+#include "Dot.h"
+#include "Scal.h"
+
+#include "Norm.h"
+#include "NormOp.h"
+#include "NormDefaultOp.h"
 
 #endif // !_linear_algebra_detail_device_cusp_
 

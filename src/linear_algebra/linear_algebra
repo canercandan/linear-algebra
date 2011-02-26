@@ -28,6 +28,12 @@
 #include "MultiplyMatVec.h"
 #include "MultiplyMatVecOp.h"
 
+#include "Dot.h"
+#include "Scal.h"
+
+#include "Norm.h"
+#include "NormOp.h"
+
 #endif // !_linear_algebra_
 
 // Local Variables:
