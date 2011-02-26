@@ -7,6 +7,13 @@ SET(SOURCES
   t-matrix-ell
   t-matrix-dia
   t-matrix-hyb
+  t-matvec
+  t-cusp-matvec
+  t-matvec-dense
+  t-cusp-matvec-dense
+  t-dot
+  t-scal
+  t-norm
   )
 
 FOREACH(current ${SOURCES})
