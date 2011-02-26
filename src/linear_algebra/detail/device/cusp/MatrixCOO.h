@@ -23,7 +23,7 @@
 
 #include <linear_algebra/Matrix.h>
 
-#include "Matrix.h"
+#include "MatrixBase.h"
 
 namespace linear_algebra
 {
@@ -34,7 +34,14 @@ namespace linear_algebra
 	    namespace cusp
 	    {
 		template < typename Atom >
-		class MatrixCOO : public Matrix< Atom, ::cusp::coo_matrix >
+		class MatrixWrapperCOO : public ::cusp::coo_matrix< int, Atom, ::cusp::device_memory >
+		{
+		public:
+		    typedef Atom AtomType;
+		};
+
+		template < typename Atom >
+		class MatrixCOO : public MatrixBase< MatrixWrapperCOO< Atom > >
 		{
 		public:
 		    MatrixCOO() {}

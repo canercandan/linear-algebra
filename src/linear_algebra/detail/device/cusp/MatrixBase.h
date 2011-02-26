@@ -16,14 +16,12 @@
  * Authors: Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#ifndef _linear_algebra_detail_device_cublas_MatrixHYB_h
-#define _linear_algebra_detail_device_cublas_MatrixHYB_h
+#ifndef _linear_algebra_detail_device_cublas_MatrixBase_h
+#define _linear_algebra_detail_device_cublas_MatrixBase_h
 
-#include <cusp/hyb_matrix.h>
+#include <cusp/print.h>
 
 #include <linear_algebra/Matrix.h>
-
-#include "MatrixBase.h"
 
 namespace linear_algebra
 {
@@ -33,25 +31,27 @@ namespace linear_algebra
 	{
 	    namespace cusp
 	    {
-		template < typename Atom >
-		class MatrixWrapperHYB : public ::cusp::hyb_matrix< int, Atom, ::cusp::device_memory >
+		template < typename Format >
+		class MatrixBase : public linear_algebra::Matrix< typename Format::AtomType >, public Format
 		{
 		public:
-		    typedef Atom AtomType;
-		};
+		    typedef typename Format::AtomType AtomType;
+		    typedef Format FormatType;
 
-		template < typename Atom >
-		class MatrixHYB : public MatrixBase< MatrixWrapperHYB< Atom > >
-		{
-		public:
-		    MatrixHYB() {}
-		    MatrixHYB(size_t n, size_t m, size_t ell_nnz, size_t coo_nnz, size_t nnz_per_row, size_t align = 32) { this->resize(n, m, ell_nnz, coo_nnz, nnz_per_row, align); }
+		    using Format::resize;
+		    using Format::swap;
+		    using Format::operator=;
 
-		    std::string className() const { return "MatrixHYB"; }
+		    std::string className() const { return "MatrixBase"; }
+
+		    virtual void printOn(std::ostream& _os) const
+		    {
+			::cusp::print_matrix( *this );
+		    }
 		};
 	    }
 	}
     }
 }
 
-#endif // !_linear_algebra_detail_device_cublas_MatrixHYB_h
+#endif // !_linear_algebra_detail_device_cublas_MatrixBase_h

@@ -23,7 +23,7 @@
 
 #include <linear_algebra/Matrix.h>
 
-#include "Matrix.h"
+#include "MatrixBase.h"
 
 namespace linear_algebra
 {
@@ -34,7 +34,14 @@ namespace linear_algebra
 	    namespace cusp
 	    {
 		template < typename Atom >
-		class MatrixDIA : public Matrix< Atom, ::cusp::dia_matrix >
+		class MatrixWrapperDIA : public ::cusp::dia_matrix< int, Atom, ::cusp::device_memory >
+		{
+		public:
+		    typedef Atom AtomType;
+		};
+
+		template < typename Atom >
+		class MatrixDIA : public MatrixBase< MatrixWrapperDIA< Atom > >
 		{
 		public:
 		    MatrixDIA() {}

@@ -20,9 +20,9 @@
 #define _linear_algebra_detail_device_cublas_Matrix_h
 
 #include <cusp/memory.h>
-#include <cusp/print.h>
+#include <cusp/array2d.h>
 
-#include <linear_algebra/Matrix.h>
+#include "MatrixBase.h"
 
 namespace linear_algebra
 {
@@ -32,22 +32,26 @@ namespace linear_algebra
 	{
 	    namespace cusp
 	    {
-		template < typename Atom, template < typename, typename, typename > class MatrixFormat >
-		class Matrix : public linear_algebra::Matrix< Atom >, public MatrixFormat< int, Atom, ::cusp::device_memory >
+		template < typename Atom >
+		class MatrixWrapperArray2d : public ::cusp::array2d< Atom, ::cusp::host_memory >
 		{
 		public:
-		    typedef MatrixFormat< int, Atom, ::cusp::device_memory > FormatType;
+		    typedef Atom AtomType;
+		};
 
-		    using FormatType::resize;
-		    using FormatType::swap;
-		    using FormatType::operator=;
+		template < typename Atom >
+		class Matrix : public MatrixBase< MatrixWrapperArray2d< Atom > >
+		{
+		public:
+		    Matrix() {}
+		    Matrix(size_t n, size_t m) { this->resize(n, m); }
+		    Matrix(size_t n, size_t m, const Atom& value)
+		    {
+			this->resize(n, m);
+			this->values.resize(n*m, value);
+		    }
 
 		    std::string className() const { return "Matrix"; }
-
-		    virtual void printOn(std::ostream& _os) const
-		    {
-			::cusp::print_matrix( *this );
-		    }
 		};
 	    }
 	}
