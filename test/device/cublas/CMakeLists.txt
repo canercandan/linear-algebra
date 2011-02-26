@@ -4,7 +4,7 @@ SET(SOURCES
   t-matvec
   t-docexample
   t-gemv
-  t-powermethod
+  cublas-t-powermethod
   )
 
 FOREACH(current ${SOURCES})
