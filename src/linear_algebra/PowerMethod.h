@@ -19,35 +19,34 @@
 #ifndef _linear_algebra_PowerMethod_h
 #define _linear_algebra_PowerMethod_h
 
-#include "Gemv.h"
-#include "Dot.h"
-#include "Scal.h"
+#include "core_library/ConstBF.h"
 
-template < typename Atom >
-class PowerMethod
+namespace linear_algebra
 {
-public:
-    Scalar< Atom > operator()( Matrix< Atom >& A, Vector< Atom >& w0, Atom epsilon, int nbItMax )
-    {
-	int nb = 0;
-	Scalar< Atom > lambda = 0;
-	Scalar< Atom > lambda_old = 0;
-	while ( abs(old_lambda - lambda) > epsilon &&
-		nb < nbItMax )
-	    {
-		gemv(A,v,w);
-		lambda_old = lambda;
-		lambda = dot(w);
-		lambda = sqrt(lambda);
-		scal(w,v,lambda);
-		nb++;
-	    }
-    }
+    template < typename MatrixT, typename VectorT >
+    class PowerMethod : public core_library::ConstBF< const MatrixT&, const VectorT&, typename MatrixT::AtomType > {};
 
-private:
-    const Gemv& gemv;
-    const Dot& dot;
-    const Scal& scal;
-};
+    // template < typename MatrixT, typename VectorT >
+    // class PowerMethod
+    // {
+    // public:
+    // 	Scalar< Atom > operator()( Matrix< Atom >& A, Vector< Atom >& w0, Atom epsilon, int nbItMax )
+    // 	{
+    // 	    int nb = 0;
+    // 	    Scalar< Atom > lambda = 0;
+    // 	    Scalar< Atom > lambda_old = 0;
+    // 	    while ( abs(old_lambda - lambda) > epsilon &&
+    // 		    nb < nbItMax )
+    // 		{
+    // 		    gemv(A,v,w);
+    // 		    lambda_old = lambda;
+    // 		    lambda = dot(w);
+    // 		    lambda = sqrt(lambda);
+    // 		    scal(w,v,lambda);
+    // 		    nb++;
+    // 		}
+    // 	}
+    // };
+}
 
 #endif // !_linear_algebra_PowerMethod_h
