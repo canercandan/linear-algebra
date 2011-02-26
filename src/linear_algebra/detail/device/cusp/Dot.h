@@ -40,7 +40,7 @@ namespace linear_algebra
 		class Dot : public linear_algebra::Dot< VectorBase< typename VectorT::FormatType > >
 		{
 		public:
-		    typename VectorT::AtomType operator()( const VectorBase< typename VectorT::FormatType >& x, const VectorBase< typename VectorT::FormatType >& y ) { return ::cusp::blas::dot(x, y); }
+		    typename VectorT::AtomType operator()( const VectorBase< typename VectorT::FormatType >& x, const VectorBase< typename VectorT::FormatType >& y ) const { return ::cusp::blas::dot(x, y); }
 		};
 
 		template < typename VectorT >

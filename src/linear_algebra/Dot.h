@@ -20,12 +20,12 @@
 #ifndef _linear_algebra_Dot_h
 #define _linear_algebra_Dot_h
 
-#include "core_library/BF.h"
+#include "core_library/ConstBF.h"
 
 namespace linear_algebra
 {
     template < typename VectorT >
-    class Dot : public core_library::BF< const VectorT&, const VectorT&, typename VectorT::AtomType > {};
+    class Dot : public core_library::ConstBF< VectorT, VectorT, typename VectorT::AtomType > {};
 }
 
 #endif // !_linear_algebra_Dot_h
