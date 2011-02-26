@@ -33,7 +33,7 @@ namespace linear_algebra
 	    namespace cusp
 	    {
 		template < typename Atom >
-		class MatrixWrapperArray2d : public ::cusp::array2d< Atom, ::cusp::host_memory >
+		class MatrixWrapperArray2d : public ::cusp::array2d< Atom, ::cusp::device_memory >
 		{
 		public:
 		    typedef Atom AtomType;
