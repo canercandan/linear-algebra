@@ -17,13 +17,13 @@
  * Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#ifndef _linear_algebra_detail_device_cublas_MultiplyMatVecOp_h
-#define _linear_algebra_detail_device_cublas_MultiplyMatVecOp_h
+#ifndef _linear_algebra_detail_device_cusp_MultiplyMatVecOp_h
+#define _linear_algebra_detail_device_cusp_MultiplyMatVecOp_h
 
 #include <linear_algebra/MultiplyMatVecOp.h>
 
-#include "Vector.h"
-#include "Matrix.h"
+#include "VectorBase.h"
+#include "MatrixBase.h"
 
 namespace linear_algebra
 {
@@ -31,13 +31,13 @@ namespace linear_algebra
     {
 	namespace device
 	{
-	    namespace cublas
+	    namespace cusp
 	    {
-		template < typename Atom >
-		class MultiplyMatVecOp : public linear_algebra::MultiplyMatVecOp< Matrix< Atom >, Vector< Atom > > {};
+		template < typename MatrixT, typename VectorT >
+		class MultiplyMatVecOp : public linear_algebra::MultiplyMatVecOp< MatrixBase< typename MatrixT::FormatType >, VectorBase< typename VectorT::FormatType > > {};
 	    }
 	}
     }
 }
 
-#endif // !_linear_algebra_detail_device_cublas_MultiplyMatVecOp_h
+#endif // !_linear_algebra_detail_device_cusp_MultiplyMatVecOp_h
