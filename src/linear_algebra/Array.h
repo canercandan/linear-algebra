@@ -30,6 +30,8 @@ namespace linear_algebra
     class Array : public Object, public Printable
     {
     public:
+	typedef Atom AtomType;
+
 	//virtual Array& operator=( const Array< Atom >& v ) = 0;
 
 	//virtual operator Atom*() const = 0;
