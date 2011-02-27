@@ -5,6 +5,10 @@ SET(SOURCES
   t-docexample
   t-gemv
   cublas-t-powermethod
+  t-dot
+  t-scal
+  t-norm
+  t-powermethod
   )
 
 FOREACH(current ${SOURCES})
