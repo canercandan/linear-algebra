@@ -62,7 +62,7 @@ namespace linear_algebra
 				Vector< Atom > y;
 				multiply(A,x,y);
 				lambda = ::sqrt( dot(y,y) );
-				scal(w,lambda);
+				scal(y,lambda);
 			    }
 			while ( _continuator( ::abs(old_lambda - lambda) ) );
 
