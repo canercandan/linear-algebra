@@ -31,6 +31,14 @@
 
 #include "Gemv.h"
 
+#include "PowerMethod.h"
+#include "Dot.h"
+#include "Scal.h"
+
+#include "Norm.h"
+#include "NormOp.h"
+#include "NormDefaultOp.h"
+
 #endif // !_linear_algebra_detail_device_cublas_
 
 // Local Variables:
