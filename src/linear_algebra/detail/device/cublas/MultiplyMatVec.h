@@ -64,6 +64,9 @@ namespace linear_algebra
 		    Gemv< Atom > _default_operation;
 		    MultiplyMatVecOp< Atom >& _operation;
 		};
+
+		template < typename Atom >
+		void multiply( const Matrix< Atom >& A, const Vector< Atom >& x, Vector< Atom >& y ) { MultiplyMatVec< Atom >()(A,x,y); }
 	    }
 	}
     }

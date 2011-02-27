@@ -53,15 +53,18 @@ namespace linear_algebra
 
 		    Atom operator()( const Matrix< Atom >& A, const Vector< Atom >& x ) const
 		    {
-			// int nb = 0;
 			Atom lambda = 0;
-			// Atom old_lambda = 0;
+			Atom old_lambda = 0;
 
 			do
 			    {
-				// TODO
+				old_lambda = lambda;
+				Vector< Atom > y;
+				multiply(A,x,y);
+				lambda = ::sqrt( dot(y,y) );
+				scal(w,lambda);
 			    }
-			while ( _continuator( lambda ) );
+			while ( _continuator( ::abs(old_lambda - lambda) ) );
 
 			return lambda;
 		    }
