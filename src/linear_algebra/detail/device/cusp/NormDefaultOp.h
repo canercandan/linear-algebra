@@ -36,7 +36,7 @@ namespace linear_algebra
 		class NormDefaultOp : public NormOp< VectorT >
 		{
 		public:
-		    typename VectorT::AtomType operator()( const VectorBase< typename VectorT::FormatType >& array ) const { return ::cusp::blas::nrm1(array); }
+		    typename VectorT::AtomType operator()( const VectorBase< typename VectorT::FormatType >& array ) const { return ::cusp::blas::nrm2(array); }
 		};
 	    }
 	}
