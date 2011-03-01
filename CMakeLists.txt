@@ -59,6 +59,10 @@ ENDIF()
 SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 LINK_DIRECTORIES(${LIBRARY_OUTPUT_PATH})
 
+IF (ENABLE_CMAKE_TESTING)
+  ENABLE_TESTING()
+ENDIF (ENABLE_CMAKE_TESTING)
+
 ######################################################################################
 
 
