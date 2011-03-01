@@ -16,17 +16,28 @@
  * Authors: Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#ifndef _linear_algebra_detail_device_cuda_
-#define _linear_algebra_detail_device_cuda_
+#ifndef _linear_algebra_detail_device_cuda_Complex_h
+#define _linear_algebra_detail_device_cuda_Complex_h
 
-#include <linear_algebra/linear_algebra>
+#include <vector_types.h>  // required for float2, double2
 
-#include "common.h"
+#include <linear_algebra/Complex.h>
 
-#include "Complex.h"
+namespace linear_algebra
+{
+    namespace detail
+    {
+	namespace device
+	{
+	    namespace cuda
+	    {
+		//! here's the common complex types you can use
+		typedef linear_algebra::Complex< float2, float > SingleComplex;
+		typedef linear_algebra::Complex< double2, double > DoubleComplex;
+		//typedef Complex< doublesingle2, doublesingle > DoubleSingleComplex;
+	    }
+	}
+    }
+}
 
-#endif // !_linear_algebra_detail_device_cuda_
-
-// Local Variables:
-// mode: C++
-// End:
+#endif // !_linear_algebra_detail_device_cuda_Complex_h
