@@ -4,4 +4,5 @@ mkdir release
 cd release
 cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_CMAKE_TESTING=1 ..
 make
+make test
 cd ..

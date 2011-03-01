@@ -37,6 +37,8 @@ int ComputePowerIteration(float* b, float* A, int N, float tol)
 
     int N2 = N*N;
 
+    int iterMax = 100;
+
     cublasStatus status;
     status = cublasAlloc(N2, sizeof(A), (void**)&d_A);
     if (status != CUBLAS_STATUS_SUCCESS)
@@ -62,7 +64,7 @@ int ComputePowerIteration(float* b, float* A, int N, float tol)
 
     do
 	{
-	    i += 1;
+	    ++i;
 	    printf("iteration %d\n", i);
 
 	    //  for (j = 1; j <= N; j++) {
@@ -89,7 +91,7 @@ int ComputePowerIteration(float* b, float* A, int N, float tol)
 	    //Scalar
 	    cublasSscal(N, 1/norm, d_b, 1);
 	}
-    while(norm < tol);
+    while(norm < tol && i < iterMax);
 
     printf("Power computed..\n");
 
