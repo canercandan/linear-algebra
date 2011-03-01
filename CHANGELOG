@@ -7,11 +7,11 @@ CHANGELOG
 
 - La classe Complex<T1,T2> a été recodée et intégrée à la librairie avec des types spécifiques à cuda SingleComplex et DoubleComplex.
 - Les librairies cusp et cublas ont été intégrées au nouveau design.
-- La librairie core-library maintient les types primitives du nouveau design et doit être configurer à l'aide du fichier install.cmake
+- La librairie core-library maintient les types primitives du nouveau design et doit être configuré à l'aide du fichier install.cmake
 - Le code du nouveau design est disponible dans le répertoire src/linear_algebra
-- Les implémentations des différentes librairies (cublas, cusparse, ...) se situent dans les répertoires src/linear_algebra/detail/device/*
-- Il est possible de spécialiser les opérateurs LA pour une exécution sur le CPU (repertoire: src/linear_algebra/detail/host/*)
-- Des fichiers de tests ont été crée pour garantir l’intégration des différents opérateurs d’algèbre linéaire dans les différents librairies CUDA.
+- L'implémentation des différentes librairies (cublas, cusparse, ...) se situent dans les répertoires src/linear_algebra/detail/device/*
+- Il est possible de spécialiser les opérateurs LA pour une exécution sur CPU (repertoire: src/linear_algebra/detail/host/*)
+- Des fichiers de tests ont été crées pour garantir l’intégration des différents opérateurs d’algèbre linéaire dans les différentes librairies CUDA.
 - Pour tester l'ensemble des fichiers de tests il suffit d’exécuter le script ./build_gcc_linux_unittest
 - Une configuration cmake a été créée et est disponible dans le répertoire cmake/modules. Elle permet de faciliter l’intégration des différentes librairies CUDA.
-- Vous devez également utiliser la dernière version de CMAKE (2.8.3 ou plus récent)
+- Vous devez également utiliser la dernière version de CMAKE (2.8.3 ou plus récente)
