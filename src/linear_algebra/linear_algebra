@@ -35,6 +35,8 @@
 #include "Norm.h"
 #include "NormOp.h"
 
+#include "Complex.h"
+
 #endif // !_linear_algebra_
 
 // Local Variables:
