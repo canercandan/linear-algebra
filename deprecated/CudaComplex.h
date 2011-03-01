@@ -256,8 +256,8 @@ namespace LA
 
     //! here's the common complex types you can use
     typedef CudaComplex< float2, float > CudaSingleComplex;
-    typedef CudaComplex< double2, double2 > CudaDoubleComplex;
-    typedef CudaComplex< doublesingle2, doublesingle > CudaDoubleSingleComplex;
+    typedef CudaComplex< double2, double > CudaDoubleComplex;
+    //typedef CudaComplex< doublesingle2, doublesingle > CudaDoubleSingleComplex;
 
 }
 
