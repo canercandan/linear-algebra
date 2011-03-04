@@ -22,6 +22,8 @@
 
 #include <cublas.h>
 
+#include <linear_algebra/detail/device/cuda/cuda>
+
 #include "MultiplyMatVecOp.h"
 
 namespace linear_algebra
@@ -30,6 +32,9 @@ namespace linear_algebra
     {
 	namespace device
 	{
+	    using cuda::SingleComplex;
+	    using cuda::DoubleComplex;
+
 	    namespace cublas
 	    {
 		template < typename Atom >
@@ -54,6 +59,12 @@ namespace linear_algebra
 		    int m = A.cols();
 		    cublasDgemv('n', m, n, 1, A, m, x, 1, 0, y, 1);
 		}
+
+		template <>
+		void Gemv< SingleComplex >::operator()( const Matrix< SingleComplex >& A, const Vector< SingleComplex >& x, Vector< SingleComplex >& y ) {}
+
+		template <>
+		void Gemv< DoubleComplex >::operator()( const Matrix< DoubleComplex >& A, const Vector< DoubleComplex >& x, Vector< DoubleComplex >& y ) {}
 	    }
 	}
     }

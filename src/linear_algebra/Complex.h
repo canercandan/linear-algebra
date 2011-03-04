@@ -19,6 +19,8 @@
 #ifndef _linear_algebra_Complex_h
 #define _linear_algebra_Complex_h
 
+#include <core_library/Printable.h>
+
 /*
  * This class has been largely inspired by the cudacomplex
  * class developed by Christian Buchner. Thanks to him.
@@ -74,7 +76,7 @@ namespace linear_algebra
      * Free to use complex class in single or double precision.
      */
     template < typename ComplexType, typename AtomType >
-    class Complex
+    class Complex : public core_library::Printable
     {
     public:
 	typedef ComplexType complex_type;
@@ -215,6 +217,11 @@ namespace linear_algebra
 
 	//! return the primitive type
 	M_HOSTDEVICE operator ComplexType() const { return _value; }
+
+	virtual void printOn(std::ostream& os) const
+	{
+	    os << "C(" << _value.x << "," << _value.y << ")";
+	}
 
     private:
 	ComplexType _value;

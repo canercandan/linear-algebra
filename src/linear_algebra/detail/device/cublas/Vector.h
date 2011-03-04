@@ -32,7 +32,7 @@ namespace linear_algebra
 	    namespace cublas
 	    {
 		template < typename Atom >
-		class Vector : virtual public Array< Atom >, virtual public linear_algebra::Vector< Atom >
+		class Vector : public Array< Atom >, virtual public linear_algebra::Vector< Atom >
 		{
 		public:
 		    Vector() {}

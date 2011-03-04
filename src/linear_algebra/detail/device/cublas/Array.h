@@ -56,12 +56,12 @@ namespace linear_algebra
 
 		    Array(int n, Atom value) : _deviceArray(NULL), _size(n)
 		    {
-			Atom* hostArray;
-			createHostArray(hostArray, _size);
-			fillHostArray(hostArray, _size, value);
-			createDeviceArray(_deviceArray, _size);
-			memcpyHostToDevice(hostArray, _deviceArray, _size);
-			destroyHostArray(hostArray);
+		    	Atom* hostArray;
+		    	createHostArray(hostArray, _size);
+		    	fillHostArray(hostArray, _size, value);
+		    	createDeviceArray(_deviceArray, _size);
+		    	memcpyHostToDevice(hostArray, _deviceArray, _size);
+		    	destroyHostArray(hostArray);
 		    }
 
 		    ~Array()
