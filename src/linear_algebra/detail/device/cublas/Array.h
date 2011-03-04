@@ -23,6 +23,7 @@
 #include <cstdlib>
 #include <stdexcept>
 
+#include <cuComplex.h>
 #include <cublas.h>
 
 #include <linear_algebra/Array.h>
@@ -70,7 +71,7 @@ namespace linear_algebra
 			destroyDeviceArray(_deviceArray);
 		    }
 
-		    Array& operator=( Atom*& data )
+		    Array< Atom >& operator=( Atom*& data )
 		    {
 			if ( !_deviceArray )
 			    {
@@ -109,6 +110,24 @@ namespace linear_algebra
 				throw std::runtime_error("deviceArray is not allocated on GPU memory");
 			    }
 			return _deviceArray;
+		    }
+
+		    operator cuComplex*() const
+		    {
+		    	if ( !_deviceArray )
+		    	    {
+		    		throw std::runtime_error("deviceArray is not allocated on GPU memory");
+		    	    }
+		    	return (cuComplex*)_deviceArray;
+		    }
+
+		    operator cuDoubleComplex*() const
+		    {
+		    	if ( !_deviceArray )
+		    	    {
+		    		throw std::runtime_error("deviceArray is not allocated on GPU memory");
+		    	    }
+		    	return (cuDoubleComplex*)_deviceArray;
 		    }
 
 		    inline int size() const { return _size; }

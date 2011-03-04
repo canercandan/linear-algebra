@@ -21,6 +21,7 @@
 #define _linear_algebra_detail_device_cublas_Gemv_h
 
 #include <cublas.h>
+#include <cuComplex.h>
 
 #include <linear_algebra/detail/device/cuda/cuda>
 
@@ -61,10 +62,20 @@ namespace linear_algebra
 		}
 
 		template <>
-		void Gemv< SingleComplex >::operator()( const Matrix< SingleComplex >& A, const Vector< SingleComplex >& x, Vector< SingleComplex >& y ) {}
+		void Gemv< SingleComplex >::operator()( const Matrix< SingleComplex >& A, const Vector< SingleComplex >& x, Vector< SingleComplex >& y )
+		{
+		    int n = A.rows();
+		    int m = A.cols();
+		    cublasCgemv('n', m, n, SingleComplex(1), A, m, x, 1, SingleComplex(0), y, 1);
+		}
 
 		template <>
-		void Gemv< DoubleComplex >::operator()( const Matrix< DoubleComplex >& A, const Vector< DoubleComplex >& x, Vector< DoubleComplex >& y ) {}
+		void Gemv< DoubleComplex >::operator()( const Matrix< DoubleComplex >& A, const Vector< DoubleComplex >& x, Vector< DoubleComplex >& y )
+		{
+		    int n = A.rows();
+		    int m = A.cols();
+		    cublasZgemv('n', m, n, DoubleComplex(1), A, m, x, 1, DoubleComplex(0), y, 1);
+		}
 	    }
 	}
     }

@@ -25,6 +25,12 @@
 
 namespace linear_algebra
 {
+    // template <>
+    // M_HOSTDEVICE Complex< SingleComplex >::operator cuComplex() const { return _value; }
+
+    // template <>
+    // M_HOSTDEVICE Complex< DoubleComplex >::operator cuDoubleComplex() const { return _value; }
+
     namespace detail
     {
 	namespace device
