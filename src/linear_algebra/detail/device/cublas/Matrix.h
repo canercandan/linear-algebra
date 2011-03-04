@@ -38,6 +38,8 @@ namespace linear_algebra
 		    using Array< Atom >::_size;
 
 		public:
+		    using Array< Atom >::operator=;
+
 		    Matrix() {}
 		    Matrix(int n) : Array< Atom >(n*n), _n(n), _m(n) {}
 		    Matrix(int n, Atom value) : Array< Atom >(n*n, value), _n(n), _m(n) {}

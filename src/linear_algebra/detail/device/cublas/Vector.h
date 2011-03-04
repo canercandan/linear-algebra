@@ -35,6 +35,8 @@ namespace linear_algebra
 		class Vector : public Array< Atom >, virtual public linear_algebra::Vector< Atom >
 		{
 		public:
+		    using Array< Atom >::operator=;
+
 		    Vector() {}
 		    Vector(int n) : Array< Atom >(n) {}
 		    Vector(int n, Atom value) : Array< Atom >(n, value) {}

@@ -26,11 +26,31 @@ typedef float T;
 
 int main(void)
 {
-    const int N = 10;
-    const int M = 10;
+    const int N = 5;
+    const int M = 5;
 
-    Matrix<T> A(M, N, 1);
-    Vector<T> x(N, 1);
+    T* hA = new T[N*M];
+    T* hx = new T[N];
+
+    for (int i = 0; i < N; i++)
+	{
+	    for (int j = 0; j < M; j++)
+		{
+		    hA[i * N + j] = 1.0/(((T)(i+1))+((T)(j+1))-1.0);
+		}
+	}
+
+    hx[0] = 1;
+    for(int i = 1; i < N; i++) { hx[i] = 0; }
+
+    Matrix<T> A(M, N);
+    Vector<T> x(N);
+
+    A = hA;
+    x = hx;
+
+    delete[] hA;
+    delete[] hx;
 
     core_library::IterContinue<T> iter(100);
     core_library::TolContinue<T> tol(1e5);
