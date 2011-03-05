@@ -20,31 +20,37 @@
 #include <linear_algebra/detail/device/cublas/cublas>
 
 using namespace linear_algebra::detail::device::cublas;
+using namespace core_library;
 
 typedef float T;
 //typedef double T;
 
-int main(void)
+int main(int ac, char** av)
 {
-    const int N = 5;
-    const int M = 5;
+    Parser parser(ac, av);
 
-    T* hA = new T[N*M];
-    T* hx = new T[N];
+    int size = parser.createParam(5, "matrixSize", "The size of the matrix", 'm').value();
 
-    for (int i = 0; i < N; i++)
+    make_help(parser);
+
+    logger << "Matrix size: " << size << std::endl;
+
+    T* hA = new T[size*size];
+    T* hx = new T[size];
+
+    for (int i = 0; i < size; i++)
 	{
-	    for (int j = 0; j < M; j++)
+	    for (int j = 0; j < size; j++)
 		{
-		    hA[i * N + j] = 1.0/(((T)(i+1))+((T)(j+1))-1.0);
+		    hA[i * size + j] = 1.0/(((T)(i+1))+((T)(j+1))-1.0);
 		}
 	}
 
     hx[0] = 1;
-    for(int i = 1; i < N; i++) { hx[i] = 0; }
+    for(int i = 1; i < size; i++) { hx[i] = 0; }
 
-    Matrix<T> A(M, N);
-    Vector<T> x(N);
+    Matrix<T> A(size, size);
+    Vector<T> x(size);
 
     A = hA;
     x = hx;
@@ -52,14 +58,21 @@ int main(void)
     delete[] hA;
     delete[] hx;
 
-    core_library::IterContinue<T> iter(100);
-    core_library::TolContinue<T> tol(1e5);
-    core_library::CheckPoint<T> checkpoint(iter);
+    IterContinue<T> iter(100);
+    TolContinue<T> tol(1e5);
+    CheckPoint<T> checkpoint(iter);
     checkpoint.add(tol);
+
+    TimeCounter counter;
+    checkpoint.add(counter);
+
+    StdoutMonitor monitor;
+    monitor.add(counter);
+    checkpoint.add(monitor);
 
     PowerMethod<T> pm(checkpoint);
 
-    core_library::logger << "eigenvalue: " << pm( A, x ) << std::endl;
+    logger << "eigenvalue: " << pm( A, x ) << std::endl;
 
     return 0;
 }

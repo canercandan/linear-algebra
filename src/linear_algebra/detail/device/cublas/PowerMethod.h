@@ -58,7 +58,6 @@ namespace linear_algebra
 
 			do
 			    {
-				std::cout << lambda << std::endl;
 				old_lambda = lambda;
 				Vector< Atom > y;
 				multiply(A,x,y);
