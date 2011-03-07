@@ -21,7 +21,6 @@
 #define _linear_algebra_detail_device_cublas_Gemv_h
 
 #include <cublas.h>
-#include <cuComplex.h>
 
 #include <linear_algebra/detail/device/cuda/cuda>
 
