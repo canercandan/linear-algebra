@@ -90,6 +90,13 @@ namespace linear_algebra
 	    _value.y = imag;
 	}
 
+	//! copy constructor from ComplexType
+	Complex( const ComplexType cplx )
+	{
+	    _value.x = cplx.x;
+	    _value.y = cplx.y;
+	}
+
 	//! Assignment from scalar to complex
 	Complex< ComplexType, AtomType >& operator=( const AtomType& scalar )
 	{
