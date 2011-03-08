@@ -23,6 +23,7 @@
 #include <cublas.h>
 
 #include <linear_algebra/Dot.h>
+#include <linear_algebra/detail/device/cuda/cuda>
 
 #include "Vector.h"
 
@@ -32,6 +33,9 @@ namespace linear_algebra
     {
 	namespace device
 	{
+	    // using cuda::SingleComplex;
+	    // using cuda::DoubleComplex;
+
 	    namespace cublas
 	    {
 		template < typename Atom >
@@ -46,6 +50,12 @@ namespace linear_algebra
 
 		template <>
 		double Dot< double >::operator()( const Vector< double >& x, const Vector< double >& y ) const { return cublasDdot( x.size(), x, 1, y, 1 ); }
+
+		template <>
+		SingleComplex Dot< SingleComplex >::operator()( const Vector< SingleComplex >& x, const Vector< SingleComplex >& y ) const { return cublasCdotu( x.size(), x, 1, y, 1 ); }
+
+		template <>
+		DoubleComplex Dot< DoubleComplex >::operator()( const Vector< DoubleComplex >& x, const Vector< DoubleComplex >& y ) const { return cublasZdotu( x.size(), x, 1, y, 1 ); }
 
 		template < typename Atom >
 		Atom dot( const Vector< Atom >& x, const Vector< Atom >& y ) { return Dot< Atom >()(x,y); }
