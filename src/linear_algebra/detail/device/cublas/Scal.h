@@ -23,6 +23,7 @@
 #include <cublas.h>
 
 #include <linear_algebra/Scal.h>
+#include <linear_algebra/detail/device/cuda/cuda>
 
 #include "Vector.h"
 
@@ -46,6 +47,12 @@ namespace linear_algebra
 
 		template <>
 		void Scal< double >::operator()( Vector< double >& array, double alpha ) { return cublasDscal( array.size(), alpha, array, 1 ); }
+
+		template <>
+		void Scal< cuda::SingleComplex >::operator()( Vector< cuda::SingleComplex >& array, cuda::SingleComplex alpha ) { return cublasCscal( array.size(), alpha, array, 1 ); }
+
+		template <>
+		void Scal< cuda::DoubleComplex >::operator()( Vector< cuda::DoubleComplex >& array, cuda::DoubleComplex alpha ) { return cublasZscal( array.size(), alpha, array, 1 ); }
 
 		template < typename Atom >
 		void scal( Vector< Atom >& array, Atom alpha ) { Scal< Atom >()(array,alpha); }

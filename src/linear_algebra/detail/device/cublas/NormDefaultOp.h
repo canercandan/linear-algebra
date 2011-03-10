@@ -22,6 +22,8 @@
 
 #include <cublas.h>
 
+#include <linear_algebra/detail/device/cuda/cuda>
+
 #include "NormOp.h"
 
 namespace linear_algebra
@@ -44,6 +46,12 @@ namespace linear_algebra
 
 		template <>
 		double NormDefaultOp< double >::operator()( const Vector< double >& array ) const { return cublasDnrm2( array.size(), array, 1 ); }
+
+		template <>
+		cuda::SingleComplex NormDefaultOp< cuda::SingleComplex >::operator()( const Vector< cuda::SingleComplex >& array ) const { return cublasScnrm2( array.size(), array, 1 ); }
+
+		template <>
+		cuda::DoubleComplex NormDefaultOp< cuda::DoubleComplex >::operator()( const Vector< cuda::DoubleComplex >& array ) const { return cublasDznrm2( array.size(), array, 1 ); }
 	    }
 	}
     }

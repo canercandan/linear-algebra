@@ -32,9 +32,6 @@ namespace linear_algebra
     {
 	namespace device
 	{
-	    using cuda::SingleComplex;
-	    using cuda::DoubleComplex;
-
 	    namespace cublas
 	    {
 		template < typename Atom >
@@ -61,19 +58,19 @@ namespace linear_algebra
 		}
 
 		template <>
-		void Gemv< SingleComplex >::operator()( const Matrix< SingleComplex >& A, const Vector< SingleComplex >& x, Vector< SingleComplex >& y )
+		void Gemv< cuda::SingleComplex >::operator()( const Matrix< cuda::SingleComplex >& A, const Vector< cuda::SingleComplex >& x, Vector< cuda::SingleComplex >& y )
 		{
 		    int n = A.rows();
 		    int m = A.cols();
-		    cublasCgemv('n', m, n, SingleComplex(1), A, m, x, 1, SingleComplex(0), y, 1);
+		    cublasCgemv('n', m, n, cuda::SingleComplex(1), A, m, x, 1, cuda::SingleComplex(0), y, 1);
 		}
 
 		template <>
-		void Gemv< DoubleComplex >::operator()( const Matrix< DoubleComplex >& A, const Vector< DoubleComplex >& x, Vector< DoubleComplex >& y )
+		void Gemv< cuda::DoubleComplex >::operator()( const Matrix< cuda::DoubleComplex >& A, const Vector< cuda::DoubleComplex >& x, Vector< cuda::DoubleComplex >& y )
 		{
 		    int n = A.rows();
 		    int m = A.cols();
-		    cublasZgemv('n', m, n, DoubleComplex(1), A, m, x, 1, DoubleComplex(0), y, 1);
+		    cublasZgemv('n', m, n, cuda::DoubleComplex(1), A, m, x, 1, cuda::DoubleComplex(0), y, 1);
 		}
 	    }
 	}

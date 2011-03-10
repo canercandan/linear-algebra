@@ -33,9 +33,6 @@ namespace linear_algebra
     {
 	namespace device
 	{
-	    // using cuda::SingleComplex;
-	    // using cuda::DoubleComplex;
-
 	    namespace cublas
 	    {
 		template < typename Atom >
@@ -52,10 +49,10 @@ namespace linear_algebra
 		double Dot< double >::operator()( const Vector< double >& x, const Vector< double >& y ) const { return cublasDdot( x.size(), x, 1, y, 1 ); }
 
 		template <>
-		SingleComplex Dot< SingleComplex >::operator()( const Vector< SingleComplex >& x, const Vector< SingleComplex >& y ) const { return cublasCdotu( x.size(), x, 1, y, 1 ); }
+		cuda::SingleComplex Dot< cuda::SingleComplex >::operator()( const Vector< cuda::SingleComplex >& x, const Vector< cuda::SingleComplex >& y ) const { return cublasCdotu( x.size(), x, 1, y, 1 ); }
 
 		template <>
-		DoubleComplex Dot< DoubleComplex >::operator()( const Vector< DoubleComplex >& x, const Vector< DoubleComplex >& y ) const { return cublasZdotu( x.size(), x, 1, y, 1 ); }
+		cuda::DoubleComplex Dot< cuda::DoubleComplex >::operator()( const Vector< cuda::DoubleComplex >& x, const Vector< cuda::DoubleComplex >& y ) const { return cublasZdotu( x.size(), x, 1, y, 1 ); }
 
 		template < typename Atom >
 		Atom dot( const Vector< Atom >& x, const Vector< Atom >& y ) { return Dot< Atom >()(x,y); }
