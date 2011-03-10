@@ -42,13 +42,13 @@ namespace linear_algebra
 	virtual AtomType operator()( const MatrixT& A, const VectorT& x ) const
 	{
 	    AtomType lambda = 1.0;
-	    AtomType old_lambda = 1.0;
+	    AtomType old_lambda = 0.0;
+	    VectorT y(x);
 
 	    do
 		{
 		    old_lambda = lambda;
-		    VectorT y;
-		    multiply(A,x,y);
+		    multiply(A,y,y);
 		    lambda = dot(y,y);
 		    scal(y,1/lambda);
 		}
