@@ -20,8 +20,6 @@
 #ifndef _linear_algebra_detail_device_cublas_PowerMethod_h
 #define _linear_algebra_detail_device_cublas_PowerMethod_h
 
-#include <core_library/Continue.h>
-
 #include <linear_algebra/PowerMethod.h>
 
 #include "Vector.h"
@@ -42,47 +40,24 @@ namespace linear_algebra
 		template < typename Atom >
 		class PowerMethod : public linear_algebra::PowerMethod< Matrix< Atom >, Vector< Atom > >
 		{
+		    typedef linear_algebra::PowerMethod< Matrix< Atom >, Vector< Atom > > Parent;
+
 		public:
-		    PowerMethod() : _multiply(_default_multiply), _dot(_default_dot), _scal(_default_scal), _norm(_default_norm), _continuator( _default_continuator ) {}
+		    PowerMethod() : Parent( _default_multiply, _default_dot, _default_scal, _default_norm, _default_continuator ) {}
 
-		    PowerMethod( core_library::Continue< Atom >& continuator ) : _multiply(_default_multiply), _dot(_default_dot), _scal(_default_scal), _norm(_default_norm), _continuator( continuator ) {}
+		    PowerMethod( core_library::Continue< Atom >& continuator ) : Parent( _default_multiply, _default_dot, _default_scal, _default_norm, continuator ) {}
 
-		    PowerMethod( MultiplyMatVec< Atom >& multiply, Dot< Atom > dot, Scal< Atom > scal, Norm< Atom > norm ) : _multiply(multiply), _dot(dot), _scal(scal), _norm(norm), _continuator( _default_continuator ) {}
+		    PowerMethod( MultiplyMatVec< Atom >& multiply, Dot< Atom >& dot, Scal< Atom >& scal, Norm< Atom >& norm ) : Parent( multiply, dot, scal, norm, _default_continuator ) {}
 
-		    PowerMethod( MultiplyMatVec< Atom >& multiply, Dot< Atom > dot, Scal< Atom > scal, Norm< Atom > norm, core_library::Continue< Atom >& continuator ) : _multiply(multiply), _dot(dot), _scal(scal), _norm(norm), _continuator( continuator ) {}
-
-		    Atom operator()( const Matrix< Atom >& A, const Vector< Atom >& x ) const
-		    {
-			Atom lambda = 1.0;
-			Atom old_lambda = 1.0;
-
-			do
-			    {
-				old_lambda = lambda;
-				Vector< Atom > y;
-				multiply(A,x,y);
-				//lambda = ::sqrt( dot(y,y) );
-				lambda = dot(y,y);
-				scal(y,1/lambda);
-			    }
-			while ( _continuator( ::abs(old_lambda - lambda) ) );
-
-			return lambda;
-		    }
+		    PowerMethod( MultiplyMatVec< Atom >& multiply, Dot< Atom >& dot, Scal< Atom >& scal, Norm< Atom >& norm, core_library::Continue< Atom >& continuator ) : Parent( multiply, dot, scal, norm, continuator ) {}
 
 		private:
 		    MultiplyMatVec< Atom > _default_multiply;
 		    Dot< Atom > _default_dot;
 		    Scal< Atom > _default_scal;
 		    Norm< Atom > _default_norm;
+
 		    core_library::DummyContinue< Atom > _default_continuator;
-
-		    MultiplyMatVec< Atom >& _multiply;
-		    Dot< Atom >& _dot;
-		    Scal< Atom >& _scal;
-		    Norm< Atom >& _norm;
-
-		    core_library::Continue< Atom >& _continuator;
 		};
 	    }
 	}

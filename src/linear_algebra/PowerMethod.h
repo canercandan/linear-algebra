@@ -19,34 +19,52 @@
 #ifndef _linear_algebra_PowerMethod_h
 #define _linear_algebra_PowerMethod_h
 
-#include "core_library/ConstBF.h"
+#include <cstdlib> // abs
+
+#include <core_library/ConstBF.h>
+#include <core_library/Continue.h>
+
+#include "MultiplyMatVec.h"
+#include "Dot.h"
+#include "Scal.h"
+#include "Norm.h"
 
 namespace linear_algebra
 {
     template < typename MatrixT, typename VectorT >
-    class PowerMethod : public core_library::ConstBF< const MatrixT&, const VectorT&, typename MatrixT::AtomType > {};
+    class PowerMethod : public core_library::ConstBF< const MatrixT&, const VectorT&, typename MatrixT::AtomType >
+    {
+    public:
+	typedef typename MatrixT::AtomType AtomType;
 
-    // template < typename MatrixT, typename VectorT >
-    // class PowerMethod
-    // {
-    // public:
-    // 	Scalar< Atom > operator()( Matrix< Atom >& A, Vector< Atom >& w0, Atom epsilon, int nbItMax )
-    // 	{
-    // 	    int nb = 0;
-    // 	    Scalar< Atom > lambda = 0;
-    // 	    Scalar< Atom > lambda_old = 0;
-    // 	    while ( abs(old_lambda - lambda) > epsilon &&
-    // 		    nb < nbItMax )
-    // 		{
-    // 		    gemv(A,v,w);
-    // 		    lambda_old = lambda;
-    // 		    lambda = dot(w);
-    // 		    lambda = sqrt(lambda);
-    // 		    scal(w,v,lambda);
-    // 		    nb++;
-    // 		}
-    // 	}
-    // };
+	PowerMethod( MultiplyMatVec< MatrixT, VectorT >& multiply, Dot< VectorT >& dot, Scal< VectorT >& scal, Norm< VectorT >& norm, core_library::Continue< AtomType >& continuator ) : _multiply(multiply), _dot(dot), _scal(scal), _norm(norm), _continuator( continuator ) {}
+
+	virtual AtomType operator()( const MatrixT& A, const VectorT& x ) const
+	{
+	    AtomType lambda = 1.0;
+	    AtomType old_lambda = 1.0;
+
+	    do
+		{
+		    old_lambda = lambda;
+		    VectorT y;
+		    multiply(A,x,y);
+		    lambda = dot(y,y);
+		    scal(y,1/lambda);
+		}
+	    while ( _continuator( ::abs(old_lambda - lambda) ) );
+
+	    return lambda;
+	}
+
+    private:
+	MultiplyMatVec< MatrixT, VectorT >& _multiply;
+	Dot< VectorT >& _dot;
+	Scal< VectorT >& _scal;
+	Norm< VectorT >& _norm;
+
+	core_library::Continue< AtomType >& _continuator;
+    };
 }
 
 #endif // !_linear_algebra_PowerMethod_h
