@@ -29,6 +29,7 @@
 #include <linear_algebra/Array.h>
 
 #include "common.h"
+#include "../cuda/common.h"
 
 namespace linear_algebra
 {
@@ -69,6 +70,19 @@ namespace linear_algebra
 		    {
 			if ( !_deviceArray ) { return; }
 			destroyDeviceArray(_deviceArray);
+		    }
+
+		    Array( const Array< Atom >& array ) { *this = array; }
+
+		    Array< Atom >& operator=( const Array< Atom >& array )
+		    {
+			if (this != &array)
+			    {
+				_size = array._size;
+				createDeviceArray(_deviceArray, _size);
+				memcpyDeviceToDevice(array._deviceArray, _deviceArray, _size);
+			    }
+		    	return *this;
 		    }
 
 		    Array< Atom >& operator=( Atom*& data )
@@ -192,6 +206,11 @@ namespace linear_algebra
 		    static void memcpyDeviceToHost(Atom*& deviceArray, Atom*& hostArray, int n)
 		    {
 			CUBLAS_CALL( cublasGetVector(n, sizeof(*deviceArray), deviceArray, 1, hostArray, 1) );
+		    }
+
+		    static void memcpyDeviceToDevice(Atom* src, Atom* dst, int n)
+		    {
+			CUDA_CALL( cudaMemcpy(dst, src, n, cudaMemcpyDeviceToDevice) );
 		    }
 
 		};
