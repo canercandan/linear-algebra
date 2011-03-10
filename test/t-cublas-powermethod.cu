@@ -27,11 +27,16 @@ typedef float T;
 
 int main(int ac, char** av)
 {
-    Parser parser(ac, av);
+    ParserLogger parser(ac, av);
 
-    int size = parser.createParam(5, "matrixSize", "The size of the matrix", 'm').value();
+    int size = parser.createParam(1000, "matrixSize", "The size of the matrix", 'm').value();
+
+    int iterMax = parser.createParam(100, "iter-max", "The maximum of iterations", 'i').value();
+
+    T tol = parser.createParam(1e-5, "tol", "The tolerance of eigenvalue", 't').value();
 
     make_help(parser);
+    make_verbose(parser);
 
     logger << "Matrix size: " << size << std::endl;
 
@@ -42,12 +47,12 @@ int main(int ac, char** av)
 	{
 	    for (int j = 0; j < size; j++)
 		{
-		    hA[i * size + j] = 1.0/(((T)(i+1))+((T)(j+1))-1.0);
+		    hA[i * size + j] = 1.0/((T(i+1))+(T(j+1))-1.0);
 		}
 	}
 
     hx[0] = 1;
-    for(int i = 1; i < size; i++) { hx[i] = 0; }
+    for (int i = 1; i < size; i++) { hx[i] = 0; }
 
     Matrix<T> A(size, size);
     Vector<T> x(size);
@@ -58,16 +63,23 @@ int main(int ac, char** av)
     delete[] hA;
     delete[] hx;
 
-    IterContinue<T> iter(100);
-    TolContinue<T> tol(1e5);
-    CheckPoint<T> checkpoint(iter);
-    checkpoint.add(tol);
+    IterContinue<T> iter_cont(iterMax);
+    TolContinue<T> tol_cont(tol);
+    CombinedContinue<T> continuators(iter_cont);
+    continuators.add(tol_cont);
+
+    CheckPoint<T> checkpoint(continuators);
 
     TimeCounter counter;
     checkpoint.add(counter);
 
+    linear_algebra::PowerMethodStat<T> pm_stat;
+    checkpoint.add(pm_stat);
+
     StdoutMonitor monitor;
     monitor.add(counter);
+    monitor.add(pm_stat);
+
     checkpoint.add(monitor);
 
     PowerMethod<T> pm(checkpoint);
