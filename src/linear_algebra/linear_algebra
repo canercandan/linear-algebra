@@ -37,6 +37,8 @@
 
 #include "Complex.h"
 
+#include "PowerMethodStat.h"
+
 #endif // !_linear_algebra_
 
 // Local Variables:
