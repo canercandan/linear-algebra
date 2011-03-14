@@ -2,16 +2,26 @@ CHANGELOG
 ~~~~~~~~~
 
 ~~~~~~~~~~
+14/03/2011
+~~~~~~~~~~
+
+* Le wrapper cublas gère maintenant les nombres complexes
++ Ajout de fichiers de tests pour les différents opérateurs blas avec des nombres complexes
+* Généralisation de la classe PowerMethod
++ Création de la classe PowerMethodStat pour afficher les résultats de lambda à chaque itération.
++ Ajout d'un operateur de copy pour le type Array permettant d'effectuer une copy de Device à Device.
+
+~~~~~~~~~~
 01/03/2011
 ~~~~~~~~~~
 
-- La classe Complex<T1,T2> a été recodée et intégrée à la librairie avec des types spécifiques à cuda SingleComplex et DoubleComplex.
-- Les librairies cusp et cublas ont été intégrées au nouveau design.
-- La librairie core-library maintient les types primitives du nouveau design et doit être configuré à l'aide du fichier install.cmake
-- Le code du nouveau design est disponible dans le répertoire src/linear_algebra
-- L'implémentation des différentes librairies (cublas, cusparse, ...) se situent dans les répertoires src/linear_algebra/detail/device/*
-- Il est possible de spécialiser les opérateurs LA pour une exécution sur CPU (repertoire: src/linear_algebra/detail/host/*)
-- Des fichiers de tests ont été crées pour garantir l’intégration des différents opérateurs d’algèbre linéaire dans les différentes librairies CUDA.
-- Pour tester l'ensemble des fichiers de tests il suffit d’exécuter le script ./build_gcc_linux_unittest
-- Une configuration cmake a été créée et est disponible dans le répertoire cmake/modules. Elle permet de faciliter l’intégration des différentes librairies CUDA.
-- Vous devez également utiliser la dernière version de CMAKE (2.8.3 ou plus récente)
++ La classe Complex<T1,T2> a été recodée et intégrée à la librairie avec des types spécifiques à cuda SingleComplex et DoubleComplex.
++ Les librairies cusp et cublas ont été intégrées au nouveau design.
++ La librairie core-library maintient les types primitives du nouveau design et doit être configuré à l'aide du fichier install.cmake
++ Le code du nouveau design est disponible dans le répertoire src/linear_algebra
++ L'implémentation des différentes librairies (cublas, cusparse, ...) se situent dans les répertoires src/linear_algebra/detail/device/*
++ Il est possible de spécialiser les opérateurs LA pour une exécution sur CPU (repertoire: src/linear_algebra/detail/host/*)
++ Des fichiers de tests ont été crées pour garantir l’intégration des différents opérateurs d’algèbre linéaire dans les différentes librairies CUDA.
++ Pour tester l'ensemble des fichiers de tests il suffit d’exécuter le script ./build_gcc_linux_unittest
++ Une configuration cmake a été créée et est disponible dans le répertoire cmake/modules. Elle permet de faciliter l’intégration des différentes librairies CUDA.
+# Vous devez également utiliser la dernière version de CMAKE (2.8.3 ou plus récente)
