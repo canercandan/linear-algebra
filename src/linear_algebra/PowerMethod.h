@@ -31,14 +31,19 @@
 
 namespace linear_algebra
 {
+    /**
+       Base class for the power method. This a high level class implementing the power method function in keeping all operators used generic. Indeed you have to define the type of each operators used. Inherits from the const binary functor.
+    */
     template < typename MatrixT, typename VectorT >
     class PowerMethod : public core_library::ConstBF< const MatrixT&, const VectorT&, typename MatrixT::AtomType >
     {
     public:
 	typedef typename MatrixT::AtomType AtomType;
 
+	//! main ctor
 	PowerMethod( MultiplyMatVec< MatrixT, VectorT >& multiply, Dot< VectorT >& dot, Scal< VectorT >& scal, Norm< VectorT >& norm, core_library::Continue< AtomType >& continuator ) : _multiply(multiply), _dot(dot), _scal(scal), _norm(norm), _continuator( continuator ) {}
 
+	//! main function
 	virtual AtomType operator()( const MatrixT& A, const VectorT& x ) const
 	{
 	    AtomType lambda = 1.0;

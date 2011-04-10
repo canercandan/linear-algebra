@@ -24,6 +24,9 @@
 
 namespace linear_algebra
 {
+    /**
+       Base class for norm, inherits from the const unary fonctor.
+    */
     template < typename VectorT >
     class Norm : public core_library::ConstUF< VectorT, typename VectorT::AtomType > {};
 }

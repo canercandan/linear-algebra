@@ -28,6 +28,9 @@ using namespace core_library;
 
 namespace linear_algebra
 {
+    /**
+       Base class for vector structure, inherits from the Array base class.
+    */
     template < typename Atom >
     class Vector : virtual public Array< Atom >
     {

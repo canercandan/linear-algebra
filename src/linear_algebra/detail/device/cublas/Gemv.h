@@ -34,13 +34,20 @@ namespace linear_algebra
 	{
 	    namespace cublas
 	    {
+		/**
+		   Gemv operator
+		*/
 		template < typename Atom >
 		class Gemv : public MultiplyMatVecOp< Atom >
 		{
 		public:
+		    //! main function
 		    void operator()( const Matrix< Atom >&, const Vector< Atom >&, Vector< Atom >& );
 		};
 
+		/**
+		   main function specialized for single precision
+		*/
 		template <>
 		void Gemv< float >::operator()( const Matrix< float >& A, const Vector< float >& x, Vector< float >& y )
 		{
@@ -49,6 +56,9 @@ namespace linear_algebra
 		    cublasSgemv('n', m, n, 1, A, m, x, 1, 0, y, 1);
 		}
 
+		/**
+		   main function specialized for double precision
+		*/
 		template <>
 		void Gemv< double >::operator()( const Matrix< double >& A, const Vector< double >& x, Vector< double >& y )
 		{
@@ -57,6 +67,9 @@ namespace linear_algebra
 		    cublasDgemv('n', m, n, 1, A, m, x, 1, 0, y, 1);
 		}
 
+		/**
+		   main function specialized for single precision complex number
+		*/
 		template <>
 		void Gemv< cuda::SingleComplex >::operator()( const Matrix< cuda::SingleComplex >& A, const Vector< cuda::SingleComplex >& x, Vector< cuda::SingleComplex >& y )
 		{
@@ -65,6 +78,9 @@ namespace linear_algebra
 		    cublasCgemv('n', m, n, cuda::SingleComplex(1), A, m, x, 1, cuda::SingleComplex(0), y, 1);
 		}
 
+		/**
+		   main function specialized for double precision complex number
+		*/
 		template <>
 		void Gemv< cuda::DoubleComplex >::operator()( const Matrix< cuda::DoubleComplex >& A, const Vector< cuda::DoubleComplex >& x, Vector< cuda::DoubleComplex >& y )
 		{

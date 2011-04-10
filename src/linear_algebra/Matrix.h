@@ -28,6 +28,9 @@ using namespace core_library;
 
 namespace linear_algebra
 {
+    /**
+       Base class for matrix structure, inherits from the Array base class.
+    */
     template < typename Atom >
     class Matrix : virtual public Array< Atom >
     {

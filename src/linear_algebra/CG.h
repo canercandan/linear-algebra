@@ -24,6 +24,9 @@
 
 namespace linear_algebra
 {
+    /**
+       Base class for conjugate gradiant classes, inherits from the binary object.
+    */
     template < typename MatrixT, typename VectorT >
     class CG : public core_library::BO< MatrixT, VectorT, VectorT > {};
 }

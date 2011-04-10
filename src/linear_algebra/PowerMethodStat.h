@@ -24,7 +24,9 @@
 
 namespace linear_algebra
 {
-
+    /**
+       Base class for the power method statistics in order to define values to print. Inherits from statistic class.
+    */
     template < typename Atom >
     class PowerMethodStat : public core_library::Stat< Atom, Atom >
     {
@@ -33,11 +35,12 @@ namespace linear_algebra
     public:
 	using Parent::value;
 
+	//! main ctor
 	PowerMethodStat() : Parent(Atom(), "\t\tpower method eigenvalues") {}
 
+	//! main function
 	void operator()( const Atom& lambda ) { value() = lambda; }
     };
-
 }
 
 #endif // !_linear_algebra_PowerMethodStat_h

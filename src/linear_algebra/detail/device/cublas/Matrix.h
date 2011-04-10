@@ -31,6 +31,9 @@ namespace linear_algebra
 	{
 	    namespace cublas
 	    {
+		/**
+		   Matrix structure for cublas
+		*/
 		template < typename Atom >
 		class Matrix : public Array< Atom >, virtual public linear_algebra::Matrix< Atom >
 		{
@@ -40,13 +43,22 @@ namespace linear_algebra
 		public:
 		    using Array< Atom >::operator=;
 
+		    //! main ctor
 		    Matrix() {}
+
+		    //! ctor to define matrix size (n*n)
 		    Matrix(int n) : Array< Atom >(n*n), _n(n), _m(n) {}
+
+		    //! ctor to define matrix size (n*n) and value to set to each element of the matrix
 		    Matrix(int n, Atom value) : Array< Atom >(n*n, value), _n(n), _m(n) {}
+
+		    //! ctor to define matrix size (n*m) and value to set to each element of the matrix
 		    Matrix(int n, int m, Atom value) : Array< Atom >(n*m, value), _n(n), _m(m) {}
 
+		    //! class name
 		    std::string className() const { return "Matrix"; }
 
+		    //! print the whole content of the matrix
 		    virtual void printOn(std::ostream& _os) const
 		    {
 			if ( !_deviceArray ) { return; }
@@ -70,9 +82,13 @@ namespace linear_algebra
 			destroyHostArray(hostArray);
 		    }
 
+		    //! to get number of rows
 		    inline int rows() const { return _n; }
+
+		    //! to get number of columns
 		    inline int cols() const { return _m; }
 
+		    //! to resize matrix size
 		    void resize(int n, int m) { Array< Atom >::resize(n*m); }
 
 		private:

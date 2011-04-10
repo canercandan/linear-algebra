@@ -20,6 +20,10 @@
 #ifndef _linear_algebra_detail_device_common_h
 #define _linear_algebra_detail_device_common_h
 
+/**
+   a common header file for all binding libraries
+*/
+
 #include <sstream>
 
 #include <cuda.h>

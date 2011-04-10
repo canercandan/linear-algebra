@@ -19,6 +19,10 @@
 #ifndef _linear_algebra_detail_device_cublas_
 #define _linear_algebra_detail_device_cublas_
 
+/**
+   main cublas binding header file
+*/
+
 #include <linear_algebra/linear_algebra>
 
 #include "common.h"

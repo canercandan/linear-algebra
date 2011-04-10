@@ -21,17 +21,17 @@
 
 #include <core_library/Printable.h>
 
-/*
- * This class has been largely inspired by the cudacomplex
- * class developed by Christian Buchner. Thanks to him.
- */
+/**
+   This class has been largely inspired by the cudacomplex
+   class developed by Christian Buchner. Thanks to him.
+*/
 
-/*
- * In order to easily defined in which context the functions
- * are going to be used, there are some defines below indicating
- * the host and device case. Otherwise we're just defining the
- * functions static.
- */
+/**
+   In order to easily defined in which context the functions
+   are going to be used, there are some defines below indicating
+   the host and device case. Otherwise we're just defining the
+   functions static.
+*/
 #undef HOST
 #undef DEVICE
 #undef HOSTDEVICE
@@ -52,9 +52,9 @@
 # define M_HOSTDEVICE	inline
 #endif
 
-/*
- * Some routines to make compatible CUDA compiler with others.
- */
+/**
+   Some routines to make compatible CUDA compiler with others.
+*/
 #ifdef __CUDACC__
 # define ALIGN(x)  __align__(x)
 #else
@@ -71,10 +71,10 @@
 
 namespace linear_algebra
 {
-    /*
-     * Generic complex class,
-     * Free to use complex class in single or double precision.
-     */
+    /**
+       Generic complex class,
+       Free to use complex class in single or double precision.
+    */
     template < typename ComplexType, typename AtomType >
     class Complex : public core_library::Printable
     {

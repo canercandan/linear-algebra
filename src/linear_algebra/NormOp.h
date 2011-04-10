@@ -24,6 +24,9 @@
 
 namespace linear_algebra
 {
+    /**
+       Base class for norm operation, inherits from the const unary fonctor. This is used by Norm classes in order to get genericity with operator.
+    */
     template < typename VectorT >
     class NormOp : public core_library::ConstUF< VectorT, typename VectorT::AtomType > {};
 }

@@ -19,6 +19,10 @@
 #ifndef _linear_algebra_
 #define _linear_algebra_
 
+/**
+   main linear algebra header file
+*/
+
 #include <core_library/core_library>
 
 #include "Array.h"

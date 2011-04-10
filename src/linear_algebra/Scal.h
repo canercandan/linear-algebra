@@ -24,6 +24,9 @@
 
 namespace linear_algebra
 {
+    /**
+       Base class for the scal operator, inherits from the binary functor.
+    */
     template < typename VectorT >
     class Scal : public core_library::BF< VectorT&, typename VectorT::AtomType, void > {};
 }

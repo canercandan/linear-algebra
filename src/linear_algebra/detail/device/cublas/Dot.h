@@ -35,25 +35,44 @@ namespace linear_algebra
 	{
 	    namespace cublas
 	    {
+		/**
+		   Dot for cublas
+		*/
 		template < typename Atom >
 		class Dot : public linear_algebra::Dot< Vector< Atom > >
 		{
 		public:
+		    //! main function
 		    Atom operator()( const Vector< Atom >& x, const Vector< Atom >& y ) const;
 		};
 
+		/**
+		   main function specialized for single precision
+		*/
 		template <>
 		float Dot< float >::operator()( const Vector< float >& x, const Vector< float >& y ) const { return cublasSdot( x.size(), x, 1, y, 1 ); }
 
+		/**
+		   main function specialized for double precision
+		*/
 		template <>
 		double Dot< double >::operator()( const Vector< double >& x, const Vector< double >& y ) const { return cublasDdot( x.size(), x, 1, y, 1 ); }
 
+		/**
+		   main function specialized for single precision complex number
+		*/
 		template <>
 		cuda::SingleComplex Dot< cuda::SingleComplex >::operator()( const Vector< cuda::SingleComplex >& x, const Vector< cuda::SingleComplex >& y ) const { return cublasCdotu( x.size(), x, 1, y, 1 ); }
 
+		/**
+		   main function specialized for double precision complex number
+		*/
 		template <>
 		cuda::DoubleComplex Dot< cuda::DoubleComplex >::operator()( const Vector< cuda::DoubleComplex >& x, const Vector< cuda::DoubleComplex >& y ) const { return cublasZdotu( x.size(), x, 1, y, 1 ); }
 
+		/**
+		   the function version of the dot operator
+		*/
 		template < typename Atom >
 		Atom dot( const Vector< Atom >& x, const Vector< Atom >& y ) { return Dot< Atom >()(x,y); }
 	    }

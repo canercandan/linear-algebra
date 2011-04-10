@@ -24,6 +24,9 @@
 
 namespace linear_algebra
 {
+    /**
+       Base class for dot operation classes, inherits from the const binary functor.
+    */
     template < typename VectorT >
     class Dot : public core_library::ConstBF< VectorT, VectorT, typename VectorT::AtomType > {};
 }

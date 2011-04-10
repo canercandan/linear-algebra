@@ -26,6 +26,9 @@ using namespace core_library;
 
 namespace linear_algebra
 {
+    /**
+       Base class for vectors and matrixes, it requires to be printable.
+    */
     template < typename Atom >
     class Array : public Object, public Printable
     {

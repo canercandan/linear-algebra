@@ -24,6 +24,9 @@
 
 namespace linear_algebra
 {
+    /**
+       Base class for the matrix-vector product, inherits from the binary operation class.
+    */
     template < typename MatrixT, typename VectorT >
     class MultiplyMatVec : public core_library::BO< MatrixT, VectorT, VectorT > {};
 }
