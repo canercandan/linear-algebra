@@ -1,1 +1,1 @@
-just another linear algebra framework computation
+A linear algebra framework in C++ along with a layout abstraction for parallelization paradigms. It provides operators to compute dense and sparse matrices with generically designed scalar, complex, vector and matrix types. At this time, the framework supports the libraries CUDA, CUBLAS, CUSP, CUSPARSE for parallel computing on GPGPU.
